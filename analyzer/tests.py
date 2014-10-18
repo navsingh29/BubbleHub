@@ -1,21 +1,47 @@
 import unittest
+import code_complexity
 import github_repo
+import os
 
 # Test value configs
 FIZZ_BUZZ_PROJET_DIR = "/Users/Ben/Projects/FizzBuzzEnterpriseEdition"
 
 class CodeComplexityTestCase(unittest.TestCase):
 
+    TEST_FILE_REL_PATH_1 = "src/main/java/com/seriouscompany/business/java/fizzbuzz/packagenamingpackage/impl/stringreturners/IntegerIntegerStringReturner.java"
+    TEST_FILE_REL_PATH_2 = "src/main/java/com/seriouscompany/business/java/fizzbuzz/packagenamingpackage/impl/loop/LoopContext.java"
+
     def setUp(self):
-        """Setup"""
-        pass
+        self.test_file_1 = os.path.join(
+            FIZZ_BUZZ_PROJET_DIR,
+            self.TEST_FILE_REL_PATH_1)
+        self.test_file_2 = os.path.join(
+            FIZZ_BUZZ_PROJET_DIR,
+            self.TEST_FILE_REL_PATH_2)
+
+        self.parser = code_complexity.JavaParser()
 
     def tearDown(self):
         """Teardown."""
         pass
 
-    def testtest(self):
-        assert True
+    def test_parse_java_code_method(self):
+        java_class = self.parser.parse(self.test_file_1)
+        method = java_class.methods[0]
+
+        self.assertEqual(method.method_name, "getIntegerReturnString")
+        self.assertEqual(method.return_type, "String")
+        self.assertEqual(method.parameters[0].field_type, "int")
+
+    def test_parse_java_fields(self):
+        java_class = self.parser.parse(self.test_file_2)
+        fields = java_class.fields
+
+        self.assertEqual(fields[0].field_type, "LoopInitializer")
+        self.assertEqual(fields[1].field_type, "LoopFinalizer")
+        self.assertEqual(fields[2].field_type, "LoopCondition")
+        self.assertEqual(fields[3].field_type, "LoopStep")
+        self.assertEqual(fields[4].field_type, "int")
 
 class GitHubRepoAnalyzer(unittest.TestCase):
 

@@ -5,6 +5,13 @@ import plyj.model as m
 
 class CodeComplexityAnalyzer(object):
 
+    PRIMITIVES = {
+        "byte", "short", "int", "long", "float", "double", "boolean",
+        "char"
+        }
+
+    VOID = "void"
+
     def __init__(self):
         pass
 
@@ -16,6 +23,12 @@ class CodeComplexityAnalyzer(object):
         """
         #TODO:
         pass
+
+    def is_primitive(self, j_type):
+        return j_type in self.PRIMITIVES
+
+    def is_return_void(self, return_type):
+        return return_type == self.VOID
 
 class JavaParser(m.Visitor):
 
@@ -116,7 +129,10 @@ class JavaParser(m.Visitor):
                 type_name = var_declaration.type.name.value
         local_java_var = JavaVariableBinding(type_name, var_decl.variable.name)
 
-        self.current_method.add_body_var(local_java_var)
+        # If we're in the scope of a method, add that as a variable to the
+        # method body
+        if self.current_method:
+            self.current_method.add_body_var(local_java_var)
         return True
 
     def set_method_visibility(self, method_obj, modifiers):
@@ -127,9 +143,11 @@ class JavaParser(m.Visitor):
 
     def parse(self, java_file):
         parser = plyj.parser.Parser()
-        tree = parser.parse_file(file(full_path))
+        tree = parser.parse_file(file(java_file))
         if not tree:
             return
         tree.accept(self)
         self.current_java_class.file_name = os.path.basename(java_file)
+
+        return self.current_java_class
 
