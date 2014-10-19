@@ -1,0 +1,6 @@
+{
+    "commits" : [
+        { "complexity" : "40" , "smells" : "70" },
+        { "complexity" : "41" , "smells" : "71" }
+    ]
+}
