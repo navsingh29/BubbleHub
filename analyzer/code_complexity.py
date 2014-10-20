@@ -1,3 +1,7 @@
+# So we can import the nested plyj project
+import sys
+sys.path.insert(0, "plyj")
+
 from models import JavaClass, JavaVariableBinding, JavaMethod, JavaInterface
 import os
 import plyj.parser

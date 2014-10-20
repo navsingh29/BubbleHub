@@ -1,4 +1,5 @@
 import unittest
+import code_smell
 import code_complexity
 import github_repo
 import os
@@ -42,6 +43,50 @@ class CodeComplexityTestCase(unittest.TestCase):
         self.assertEqual(fields[2].field_type, "LoopCondition")
         self.assertEqual(fields[3].field_type, "LoopStep")
         self.assertEqual(fields[4].field_type, "int")
+
+class CodeSmellAnalyzer(unittest.TestCase):
+
+    PMD_DIR = "pmd"
+
+    def setUp(self):
+        """Setup"""
+        self.code_smeller = code_smell.CodeSmellAnalyzer()
+        self.pmd_dir = os.path.join(os.getcwd(), self.PMD_DIR)
+        self.test_proj_dir = os.path.join(os.getcwd(), FIZZ_BUZZ_PROJET_DIR)
+
+    def tearDown(self):
+        """Teardown."""
+        pass
+
+    def test_code_smell_files(self):
+        code_smells = self.code_smeller.get_code_smells(self.pmd_dir, self.test_proj_dir)
+        code_smell_files = [cs.file_name for cs in code_smells]
+        self.assertIn(
+            "/Users/Ben/Projects/FizzBuzzEnterpriseEdition/src/main/java/com/seriouscompany/business/java/fizzbuzz/packagenamingpackage/impl/math/arithmetics/IntegerDivider.java",
+            code_smell_files)
+        self.assertIn(
+            "/Users/Ben/Projects/FizzBuzzEnterpriseEdition/src/main/java/com/seriouscompany/business/java/fizzbuzz/packagenamingpackage/impl/strategies/comparators/integercomparator/ThreeWayIntegerComparator.java",
+            code_smell_files)
+
+    def test_code_smell_types(self):
+        code_smells = self.code_smeller.get_code_smells(self.pmd_dir, self.test_proj_dir)
+        cs_types = []
+        for cs in code_smells:
+            cs_types += cs.types
+
+        self.assertIn(
+            "The class 'IntegerDivider' has a Cyclomatic Complexity of 5 (Highest = 4).",
+            cs_types)
+        self.assertIn(
+            "The class 'NoFizzNoBuzzStrategy' has a Cyclomatic Complexity of 6 (Highest = 5).",
+            cs_types)
+
+    def test_cs_get_num_types(self):
+        code_smells = self.code_smeller.get_code_smells(self.pmd_dir, self.test_proj_dir)
+
+        self.assertEqual(1, code_smells[0].num_types())
+        self.assertEqual(2, code_smells[1].num_types())
+        self.assertEqual(1, code_smells[2].num_types())
 
 class GitHubRepoAnalyzer(unittest.TestCase):
 

@@ -1,6 +1,19 @@
 import os
+import re
 
 PMD_CLI = "%s/bin/run.sh pmd -d %s -f text -R %s/rulesets/basic.xml -version 1.7 -language java"
+
+class CodeSmellFile(object):
+
+    def __init__(self, file_name):
+        self.file_name = file_name
+        self.types = []
+
+    def add_type(self, message_type):
+        self.types.append(message_type)
+
+    def num_types(self):
+        return len(self.types)
 
 class CodeSmellAnalyzer(object):
 
@@ -16,13 +29,17 @@ class CodeSmellAnalyzer(object):
         """
         pop = os.popen(PMD_CLI % (pmd_dir, project_dir, pmd_dir))
 
-        code_smells_files = set()
-        for i in pop:
-            cs_file = self.__extract_file_name(i)
-            if cs_file:
-                code_smells_files.add(cs_file)
+        code_smells = dict()
+        for pmd_result in pop:
+            cs_type = self.__extract_code_smell_type(pmd_result)
+            cs_file = self.__extract_file_name(pmd_result)
 
-        return list(code_smells_files)
+            if cs_file and cs_type:
+                if not code_smells.has_key(cs_file):
+                    code_smells[cs_file] = CodeSmellFile(cs_file)
+                code_smells.get(cs_file).add_type(cs_type)
+
+        return list(code_smells.itervalues())
 
     def __extract_file_name(self, pmd_result):
         """
@@ -36,3 +53,11 @@ class CodeSmellAnalyzer(object):
         else:
             file_name = None
         return file_name
+
+    def __extract_code_smell_type(self, pmd_result):
+        """
+        Extracts the message for the code smell from the pmd result
+
+        :param pmd_result: The result from pmd
+        """
+        return pmd_result.split("\t")[-1].replace("\n", "")
