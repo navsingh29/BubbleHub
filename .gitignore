@@ -4,3 +4,5 @@ analyzer/parser.out
 analyzer/lextab.py
 analyzer/parsetab.py
 
+pmd/
+.DS_STORE
