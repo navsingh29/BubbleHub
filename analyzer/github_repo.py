@@ -3,6 +3,25 @@ import os
 import re
 import sys
 
+def is_dir_git_repo(project_dir):
+    """
+    Checks if the dir is a git repository
+    """
+    cur_dir = os.getcwd()
+    os.chdir(project_dir)
+
+    pop = os.popen("git rev-parse --is-inside-work-tree")
+    is_git_dir = False
+
+    for i in pop:
+        if "true" in i:
+            is_git_dir = True
+            break
+        break
+
+    os.chdir(cur_dir)
+    return is_git_dir
+
 def get_merge_request_shas(git_repo_dir):
     """
     Get the shas of only the Merged pull requests

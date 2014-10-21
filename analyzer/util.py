@@ -27,7 +27,20 @@ def get_all_files_of_type(dir_name, file_type):
 
     return files_to_return
 
+def strip_full_file_path(file_path, project_name):
+    """
+    Splits a full file path which is an absolute path, to a relative path where
+    the project_name is the root of the path
+
+    :file_path: The path of the file to split
+    :project_name: The project name
+    """
+    split = file_path.split(os.sep)
+    index = split.index(project_name)
+    return os.sep.join(split[index:])
+
 def checkout_sha(sha):
     os.system("git checkout .")
     os.system("git checkout %s" % sha)
+
 
