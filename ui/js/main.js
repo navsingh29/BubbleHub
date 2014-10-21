@@ -23,22 +23,72 @@ function loadJSON(path, success, error) {
 }
 
 /**
- * Handle the JSON once its successfully parsed from the JSON file
+ * Callback for JSON parser, begins the animation for the provided data
  *
- * @param data The JavaScript object representing the parsed JSON file
+ * @param data The JavaScript "commits" object to be animated
  */
-function handleJSON(data) {
-    var size = data.commits.length;
+function beginAnimation(data) {
+    var numCommits = data.commits.length;
 
-    // This loop is where all the commits will be analyzed for UI
-    for(var i = 0; i < size; i++) {
+    // This loop is where all the commits will be analyzed and displayed in UI
+    for(var i = 0; i < numCommits; i++) {
 
-        // We may want to eventually add a timer here to depict constant time frames
+        // TODO: We may want to eventually add a real timer here to depict constant time frames
+        var currCommit = data.commits[i];
+        var numFiles = currCommit.length;
 
-        // For now, just print the data to the page
-        var curr = data.commits[i];
-        var currContent = "<p>" + curr.complexity + ", " + curr.smells + "</p>";
-        document.write(currContent);
+        // This list contains a list of Bubbles that will be created
+        // (each bubble represents a file visual)
+        var commitBubbles = [];
+
+        // This loop populates the list of bubbles based on current commit
+        for(var j = 0; j < numFiles; j++) {
+            var newBubble = {}
+            var currFile = currCommit[j];
+            newBubble.fileName = currFile.fileName;
+            newBubble.centreX = i; // TODO stub
+            newBubble.centreY = i; // TODO stub
+            // 210 hue is Cyan-blues
+            // 100% saturation
+            // 50% lightness is "normal"
+            // http://www.w3.org/TR/css3-color/#hsl-examples
+            newBubble.color = "hsl(210, 100%, 50%)"; // TODO stub
+            commitBubbles.push(newBubble);
+        }
+
+        // clear the canvas for next "frame"
+        clearCanvas();
+
+        // create the next set of bubbles (ie: frame) obtained from the current commit
+        createBubbles(commitBubbles);
+    }
+}
+
+/**
+ * Clear the canvas of the webpage
+ */
+function clearCanvas() {
+    // TODO Clear <p> for now, eventually will be SVG
+    d3.select("body").selectAll("p").remove();
+}
+
+/**
+ * Create the "frame" with the appropriate bubble images
+ *
+ * @param bubbles The list of Bubbles, where each Bubble represents a File Visual
+ */
+function createBubbles(bubbles) {
+    var numBubbles = bubbles.length;
+
+    for (var i = 0; i < numBubbles; i++) {
+        var currBubble = bubbles[i];
+
+        // TODO Just print the bubble details for now
+        var curBubbleString = currBubble.fileName + ", ";
+        curBubbleString = curBubbleString + currBubble.centreX + ", ";
+        curBubbleString = curBubbleString + currBubble.centreY + ", ";
+        curBubbleString = curBubbleString + currBubble.color;
+        document.write("<p>" + curBubbleString + "</p>");
     }
 }
 
@@ -46,9 +96,10 @@ function handleJSON(data) {
  * Main function that starts program execution
  */
 function main() {
-    // Use MOCK data for now
-    loadJSON('mock-commits-data.json',
-        handleJSON,
+    // TODO: Use MOCK data for now
+    loadJSON(
+        "mock-commits-data.json",
+        beginAnimation,
         function(xhr) { document.write("Error getting JSON data from file"); }
     );
 }
