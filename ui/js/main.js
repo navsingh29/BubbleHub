@@ -18,7 +18,7 @@ function loadJSON(path, success, error) {
                     success(JSON.parse(xhr.responseText));
             } else {
                 if (error)
-                    error(xhr);
+                    error();
             }
         }
     };
@@ -91,9 +91,9 @@ function createFrame(fileVisualObject) {
 function main() {
     // TODO: Use MOCK data for now
     loadJSON(
-        "sample.json",
+        "mock-commits-data.json",
         beginAnimation,
-        function(xhr) { document.write("Error getting JSON data from file"); }
+        function() { document.write("Error getting JSON data from file"); }
     );
 }
 

@@ -11,13 +11,10 @@
 function createBubbleObject(currFile) {
     var newBubble = {}
     newBubble.fileName = currFile.fileName;
-    newBubble.centreX = 0; // TODO stub
-    newBubble.centreY = 1; // TODO stub
-    // 210 hue is Cyan-blues
-    // 100% saturation
-    // 50% lightness is "normal"
-    // http://www.w3.org/TR/css3-color/#hsl-examples
-    newBubble.color = "hsl(210, 100%, 50%)"; // TODO stub
+    newBubble.centreX = getBubbleCentreX();
+    newBubble.centreY = getBubbleCentreY();
+    newBubble.radius = getBubbleRadius(currFile.complexity);
+    newBubble.color = getBubbleColour(currFile.smells);
     return newBubble;
 }
 
@@ -34,4 +31,35 @@ function createBubbleImage(bubble) {
     curBubbleString = curBubbleString + bubble.centreY + ", ";
     curBubbleString = curBubbleString + bubble.color;
     document.write("<p>" + curBubbleString + "</p>");
+}
+
+function getBubbleCentreX() {
+    // TODO stub
+    return 0;
+}
+
+function getBubbleCentreY() {
+    // TODO stub
+    return 0;
+}
+
+function getBubbleRadius(complexity) {
+    // TODO stub
+    return complexity * 2;
+}
+
+function getBubbleColour(smells) {
+    // 210 hue is Cyan-blues
+    // Saturation=dirtLevel - Change this to depict dirty bubble
+    // (0% is completely dirty, 100% is completely clean)
+    // 50% lightness is "normal colour"
+    // http://www.w3.org/TR/css3-color/#hsl-examples
+    // TODO stub
+    var dirtLevel = getBubbleDirt(smells);
+    return "hsl(210, " + dirtLevel + "%, 50%)";
+}
+
+function getBubbleDirt(smells) {
+    // TODO stub
+    return smells / 2;
 }
