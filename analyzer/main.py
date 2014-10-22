@@ -2,6 +2,7 @@ from github_repo import get_merge_request_shas, is_dir_git_repo
 from util import *
 from code_smell import CodeSmellAnalyzer, CodeSmellFile
 from random import randint
+import config
 import json
 import argparse
 import os
@@ -10,15 +11,13 @@ import sys
 parser = argparse.ArgumentParser(description="Bubble hub.")
 parser.add_argument("--project", required=True,
                     help="Directory of java project to analyze. Project should be in git")
-parser.add_argument("--pmd", required=True,
-                    help="The directory of the PMD project")
 
 args = parser.parse_args()
 
 # Get the directories we're interested in
 cur_dir = os.getcwd()
 project_dir = args.project
-pmd_dir = args.pmd
+pmd_dir = config.pmd_directory
 
 project_name = project_dir.split(os.sep)[-1]
 
