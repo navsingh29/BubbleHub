@@ -28,3 +28,4 @@ BubbleHub requires two libraries to be downloaded:
 You will then need to point BubbleHub to these two libraries. You can do this by updating 'config.json' and update the 'plyj_directory' and 'pmd_directory' to point to the root of path of those two libraries.
 
 After those are setup, just run the main script.
+
