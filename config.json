@@ -1,0 +1,6 @@
+{
+    "output_json" : "output.json",
+
+    "pmd_dir" : "Directory to root of pmd library",
+    "plyj_dir" : "Directory to root of plyj library"
+}

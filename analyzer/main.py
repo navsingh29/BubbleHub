@@ -8,6 +8,7 @@ import argparse
 import os
 import sys
 
+
 parser = argparse.ArgumentParser(description="Bubble hub.")
 parser.add_argument("--project", required=True,
                     help="Directory of java project to analyze. Project should be in git")
@@ -17,7 +18,14 @@ args = parser.parse_args()
 # Get the directories we're interested in
 cur_dir = os.getcwd()
 project_dir = args.project
-pmd_dir = config.pmd_directory
+pmd_dir = config.config["pmd_dir"]
+
+# Check to see if valid directories
+if not os.path.isdir(project_dir):
+    pass
+
+if not os.path.isdir(pmd_dir):
+    pass
 
 project_name = project_dir.split(os.sep)[-1]
 
