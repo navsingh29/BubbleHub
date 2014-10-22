@@ -18,7 +18,7 @@ function loadJSON(path, success, error) {
                     success(JSON.parse(xhr.responseText));
             } else {
                 if (error)
-                    error(xhr);
+                    error();
             }
         }
     };
@@ -33,6 +33,8 @@ function loadJSON(path, success, error) {
  */
 function beginAnimation(data) {
     var numCommits = data.commits.length;
+
+    var svgContainer = createSVGContainer();
 
     // This loop is where all the commits will be analyzed and displayed in UI
     for(var i = 0; i < numCommits; i++) {
@@ -55,34 +57,37 @@ function beginAnimation(data) {
         }
 
         // clear the canvas for next "frame"
-        clearCanvas();
+        clearCanvas(svgContainer);
 
+        svgContainer = createSVGContainer();
         // create the next set of bubbles (ie: frame) obtained from the current commit
-        createFrame(commitFileVisuals);
+        createFrame(commitFileVisuals, svgContainer);
     }
+}
+
+function createSVGContainer() {
+    // Create SVG container of x and y = 960
+    var size = 960;
+    return d3.select("body").append("svg")
+                            .attr("width", size)
+                            .attr("height", size);
 }
 
 /**
  * Clear the canvas of the webpage
  */
-function clearCanvas() {
-    // TODO Clear <p> for now, eventually will be SVG
-    d3.select("body").selectAll("p").remove();
+function clearCanvas(svgContainer) {
+    svgContainer.remove();
 }
 
 /**
  * Create the "frame" with the appropriate file visual images
  *
- * @param fileVisualObject The list of file visual objects
+ * @param fileVisualObjects The list of file visual objects
  */
-function createFrame(fileVisualObject) {
-    var numBubbles = fileVisualObject.length;
-
-    for (var i = 0; i < numBubbles; i++) {
-
-        // Create the appropriate image/visual (bubble in this case)
-        createBubbleImage(fileVisualObject[i]);
-    }
+function createFrame(fileVisualObjects, svgContainer) {
+    // Create file visual image; bubbles right now
+    createBubbleImages(fileVisualObjects, svgContainer);
 }
 
 /**
@@ -91,9 +96,9 @@ function createFrame(fileVisualObject) {
 function main() {
     // TODO: Use MOCK data for now
     loadJSON(
-        "sample.json",
+        "mock-commits-data.json",
         beginAnimation,
-        function(xhr) { document.write("Error getting JSON data from file"); }
+        function() { document.write("Error getting JSON data from file"); }
     );
 }
 

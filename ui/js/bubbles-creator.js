@@ -11,27 +11,59 @@
 function createBubbleObject(currFile) {
     var newBubble = {}
     newBubble.fileName = currFile.fileName;
-    newBubble.centreX = 0; // TODO stub
-    newBubble.centreY = 1; // TODO stub
-    // 210 hue is Cyan-blues
-    // 100% saturation
-    // 50% lightness is "normal"
-    // http://www.w3.org/TR/css3-color/#hsl-examples
-    newBubble.color = "hsl(210, 100%, 50%)"; // TODO stub
+    newBubble.centreX = getBubbleCentreX();
+    newBubble.centreY = getBubbleCentreY();
+    newBubble.radius = getBubbleRadius(currFile.complexity);
+    newBubble.color = getBubbleColour(currFile.smells);
     return newBubble;
 }
 
 /**
- * Create the bubble image for the given Bubble
+ * Create the bubbles image for the given Bubbles
  *
- * @param bubble The bubble to create the image for
+ * @param bubbles The list of bubbles to create the images for
  */
-function createBubbleImage(bubble) {
+function createBubbleImages(bubbles, svgContainer) {
+    // TODO Just creating simple circles for now
+    var circles = svgContainer.selectAll("circle")
+                              .data(bubbles)
+                              .enter()
+                              .append("circle");
 
-    // TODO Just print the bubble details for now
-    var curBubbleString = bubble.fileName + ", ";
-    curBubbleString = curBubbleString + bubble.centreX + ", ";
-    curBubbleString = curBubbleString + bubble.centreY + ", ";
-    curBubbleString = curBubbleString + bubble.color;
-    document.write("<p>" + curBubbleString + "</p>");
+    var circleAttributes = circles
+                           .attr("cx", function (bubble) { return bubble.centreX; })
+                           .attr("cy", function (bubble) { return bubble.centreY; })
+                           .attr("r", function (bubble) { return bubble.radius; })
+                           .style("fill", function(bubble) {return bubble.color;});
+}
+
+function getBubbleCentreX() {
+    // TODO stub
+    return 400;
+}
+
+function getBubbleCentreY() {
+    // TODO stub
+    return 400;
+}
+
+function getBubbleRadius(complexity) {
+    // TODO stub
+    return complexity / 2;
+}
+
+function getBubbleColour(smells) {
+    // 210 hue is Cyan-blues
+    // Saturation=dirtLevel - Change this to depict dirty bubble
+    // (0% is completely dirty, 100% is completely clean)
+    // 50% lightness is "normal colour"
+    // http://www.w3.org/TR/css3-color/#hsl-examples
+    // TODO stub
+    var dirtLevel = getBubbleDirt(smells);
+    return "hsl(210, " + dirtLevel + "%, 50%)";
+}
+
+function getBubbleDirt(smells) {
+    // TODO stub
+    return smells / 2;
 }
