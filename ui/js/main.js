@@ -94,12 +94,17 @@ function createFrame(fileVisualObjects, svgContainer) {
  * Main function that starts program execution
  */
 function main() {
-    // TODO: Use MOCK data for now
+    var configFile = "config.json";
     loadJSON(
-        "mock-commits-data.json",
-        beginAnimation,
-        function() { document.write("Error getting JSON data from file"); }
-    );
+        configFile,
+        function(config) {
+            loadJSON(
+                config.input_json,
+                beginAnimation,
+                function() { document.write("Error getting JSON data from commits data file: " + config.input_json); }
+            );
+        },
+        function() { document.write("Error getting JSON config from config file: " + configFile); });
 }
 
 // Call the main function to start program execution
