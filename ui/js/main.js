@@ -1,4 +1,8 @@
 /**
+ * Created by gurkaran on 2014-10-17.
+ */
+
+/**
  * Get JSON data from file (without using jQuery)
  *
  * @param path The path of the JSON file
@@ -39,28 +43,22 @@ function beginAnimation(data) {
 
         // This list contains a list of Bubbles that will be created
         // (each bubble represents a file visual)
-        var commitBubbles = [];
+        var commitFileVisuals = [];
 
         // This loop populates the list of bubbles based on current commit
         for(var j = 0; j < numFiles; j++) {
-            var newBubble = {}
-            var currFile = currCommit[j];
-            newBubble.fileName = currFile.fileName;
-            newBubble.centreX = i; // TODO stub
-            newBubble.centreY = i; // TODO stub
-            // 210 hue is Cyan-blues
-            // 100% saturation
-            // 50% lightness is "normal"
-            // http://www.w3.org/TR/css3-color/#hsl-examples
-            newBubble.color = "hsl(210, 100%, 50%)"; // TODO stub
-            commitBubbles.push(newBubble);
+
+            // Create the file visual object based on required visual (bubble in this case)
+            var newFileVisualObject = createBubbleObject(currCommit[j]);
+
+            commitFileVisuals.push(newFileVisualObject);
         }
 
         // clear the canvas for next "frame"
         clearCanvas();
 
         // create the next set of bubbles (ie: frame) obtained from the current commit
-        createBubbles(commitBubbles);
+        createFrame(commitFileVisuals);
     }
 }
 
@@ -73,22 +71,17 @@ function clearCanvas() {
 }
 
 /**
- * Create the "frame" with the appropriate bubble images
+ * Create the "frame" with the appropriate file visual images
  *
- * @param bubbles The list of Bubbles, where each Bubble represents a File Visual
+ * @param fileVisualObject The list of file visual objects
  */
-function createBubbles(bubbles) {
-    var numBubbles = bubbles.length;
+function createFrame(fileVisualObject) {
+    var numBubbles = fileVisualObject.length;
 
     for (var i = 0; i < numBubbles; i++) {
-        var currBubble = bubbles[i];
 
-        // TODO Just print the bubble details for now
-        var curBubbleString = currBubble.fileName + ", ";
-        curBubbleString = curBubbleString + currBubble.centreX + ", ";
-        curBubbleString = curBubbleString + currBubble.centreY + ", ";
-        curBubbleString = curBubbleString + currBubble.color;
-        document.write("<p>" + curBubbleString + "</p>");
+        // Create the appropriate image/visual (bubble in this case)
+        createBubbleImage(fileVisualObject[i]);
     }
 }
 
@@ -98,7 +91,7 @@ function createBubbles(bubbles) {
 function main() {
     // TODO: Use MOCK data for now
     loadJSON(
-        "mock-commits-data.json",
+        "sample.json",
         beginAnimation,
         function(xhr) { document.write("Error getting JSON data from file"); }
     );
