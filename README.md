@@ -1,3 +1,29 @@
 Bubble Hub
-CS 410 Project
+==============
+
+UBC CS 410 Project
 Github repository analyser
+
+Introduction
+==============
+
+Bubble hub is a tool used to analyze Java projects under git source control for their code smells and code complexities, and visualize them over time on a per merged pull request.
+
+The project uses two Java code analysis tools, both are required:
+a) PLYJ @ https://github.com/musiKk/plyj
+b) PMD @ http://pmd.sourceforge.net/
+
+To visualize the results, we use D3.js @ http://d3js.org/.
+
+Current stages of development:
+==============
+BubbleHub is still under construction. We are currently working on combining the parsed results to be visualized by D3.js
+
+How to run:
+==============
+BubbleHub requires two libraries to be downloaded: 
+a) PLYJ (https://github.com/musiKk/plyj)
+b) PMD @ http://pmd.sourceforge.net/
+
+You will then need to point BubbleHub to these two libraries. You can do this by updating config.py and update the plyj_directory and pmd_directory to point to the root of path of those two libraries.
+
