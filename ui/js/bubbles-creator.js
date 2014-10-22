@@ -19,33 +19,37 @@ function createBubbleObject(currFile) {
 }
 
 /**
- * Create the bubble image for the given Bubble
+ * Create the bubbles image for the given Bubbles
  *
- * @param bubble The bubble to create the image for
+ * @param bubbles The list of bubbles to create the images for
  */
-function createBubbleImage(bubble) {
+function createBubbleImages(bubbles, svgContainer) {
+    // TODO Just creating simple circles for now
+    var circles = svgContainer.selectAll("circle")
+                              .data(bubbles)
+                              .enter()
+                              .append("circle");
 
-    // TODO Just print the bubble details for now
-    var curBubbleString = bubble.fileName + ", ";
-    curBubbleString = curBubbleString + bubble.centreX + ", ";
-    curBubbleString = curBubbleString + bubble.centreY + ", ";
-    curBubbleString = curBubbleString + bubble.color;
-    document.write("<p>" + curBubbleString + "</p>");
+    var circleAttributes = circles
+                           .attr("cx", function (bubble) { return bubble.centreX; })
+                           .attr("cy", function (bubble) { return bubble.centreY; })
+                           .attr("r", function (bubble) { return bubble.radius; })
+                           .style("fill", function(bubble) {return bubble.color;});
 }
 
 function getBubbleCentreX() {
     // TODO stub
-    return 0;
+    return 400;
 }
 
 function getBubbleCentreY() {
     // TODO stub
-    return 0;
+    return 400;
 }
 
 function getBubbleRadius(complexity) {
     // TODO stub
-    return complexity * 2;
+    return complexity / 2;
 }
 
 function getBubbleColour(smells) {
