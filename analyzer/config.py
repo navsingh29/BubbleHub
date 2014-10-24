@@ -7,7 +7,8 @@ import os
 JSON_CONFIG = "config.json"
 
 project_root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
-json_config_file = os.path.join(project_root_dir, JSON_CONFIG)
+ui_dir = os.path.join(project_root_dir, "ui")
+json_config_file = os.path.join(ui_dir, JSON_CONFIG)
 
 with open(json_config_file) as f:
     json_contents = f.readlines()
