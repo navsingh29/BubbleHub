@@ -36,7 +36,11 @@ def strip_full_file_path(file_path, project_name):
     :project_name: The project name
     """
     split = file_path.split(os.sep)
-    index = split.index(project_name)
+    try:
+        index = split.index(project_name)
+    except ValueError:
+        raise ValueError("Project %s not in file_path" % project_name)
+
     return os.sep.join(split[index:])
 
 def checkout_sha(sha):

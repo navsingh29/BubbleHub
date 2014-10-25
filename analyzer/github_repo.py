@@ -72,6 +72,7 @@ def reduce_sha_count(shas, max_count):
         for i in range(max_count-2):
             temp.append(shas[index])
             index += chunk_size
+        temp.append(shas[-1])
         return temp
     else:
         return shas
