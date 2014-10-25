@@ -1,4 +1,5 @@
 import unittest
+import mock
 import code_smell
 import code_complexity
 import github_repo
@@ -44,13 +45,67 @@ class CodeComplexityTestCase(unittest.TestCase):
         self.assertEqual(fields[3].field_type, "LoopStep")
         self.assertEqual(fields[4].field_type, "int")
 
+class CodeSmellAnalyzerMock(unittest.TestCase):
+
+    # Values do not matter because we're mocking out the call to the pmd
+    PMD_DIR = "pmd"
+    PROJECT_DIR = ""
+
+    def setUp(self):
+        """Setup"""
+        # Create the PMDCodeSmell mock
+        self.pmd_dir = os.path.join(os.getcwd(), self.PMD_DIR)
+        self.test_proj_dir = os.path.join(os.getcwd(), FIZZ_BUZZ_PROJET_DIR)
+
+    def tearDown(self):
+        """Teardown."""
+        pass
+
+    def test_retrieve_file_and_type(self):
+        mock_result = ["/Dir/Name/File.java:9:\tCode Smell Problem"]
+        self.pmd = code_smell.PMDCodeSmell()
+        self.pmd.call_pmd = mock.Mock(return_value=mock_result)
+        self.code_smeller = code_smell.CodeSmellAnalyzer(self.pmd)
+
+        c_smells = self.code_smeller.get_code_smells(self.PMD_DIR, self.PROJECT_DIR)[0]
+        self.assertEqual("/Dir/Name/File.java", c_smells.file_name)
+        self.assertEqual("Code Smell Problem", c_smells.types[0])
+
+    def test_does_not_retrieve_non_java_files(self):
+        mock_result = ["/Dir/Not/Java.something.py\tCodeSmell"]
+        self.pmd = code_smell.PMDCodeSmell()
+        self.pmd.call_pmd = mock.Mock(return_value=mock_result)
+        self.code_smeller = code_smell.CodeSmellAnalyzer(self.pmd)
+
+        c_smells = self.code_smeller.get_code_smells(self.PMD_DIR, self.PROJECT_DIR)
+        self.assertEqual(0, len(c_smells), "File has to be specified as .java file")
+
+    def test_invalid_file_format_no_file_numbers(self):
+        mock_result = ["/Dir/Java.java\tCodeSmell"]
+        self.pmd = code_smell.PMDCodeSmell()
+        self.pmd.call_pmd = mock.Mock(return_value=mock_result)
+        self.code_smeller = code_smell.CodeSmellAnalyzer(self.pmd)
+
+        c_smells = self.code_smeller.get_code_smells(self.PMD_DIR, self.PROJECT_DIR)
+        self.assertEqual(0, len(c_smells), "Invalid file format because it doesn't include the line numbers")
+
+    def test_invalid_no_code_smell(self):
+        mock_result = ["/Dir/Name/File/java\t"]
+
+        self.pmd = code_smell.PMDCodeSmell()
+        self.pmd.call_pmd = mock.Mock(return_value=mock_result)
+        self.code_smeller = code_smell.CodeSmellAnalyzer(self.pmd)
+
+        c_smells = self.code_smeller.get_code_smells(self.PMD_DIR, self.PROJECT_DIR)
+        self.assertEqual(0, len(c_smells), "No file type should not produce a code smell")
+
 class CodeSmellAnalyzer(unittest.TestCase):
 
     PMD_DIR = "pmd"
 
     def setUp(self):
         """Setup"""
-        self.code_smeller = code_smell.CodeSmellAnalyzer()
+        self.code_smeller = code_smell.CodeSmellAnalyzer(code_smell.PMDCodeSmell())
         self.pmd_dir = os.path.join(os.getcwd(), self.PMD_DIR)
         self.test_proj_dir = os.path.join(os.getcwd(), FIZZ_BUZZ_PROJET_DIR)
 

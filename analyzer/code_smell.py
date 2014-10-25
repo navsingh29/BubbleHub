@@ -3,6 +3,20 @@ import re
 
 PMD_CLI = "%s/bin/run.sh pmd -d %s -f text -R %s/rulesets/basic.xml -version 1.7 -language java"
 
+class PMDCodeSmell(object):
+
+    PMD_CLI = "%s/bin/run.sh pmd -d %s -f text -R %s/rulesets/basic.xml -version 1.7 -language java"
+
+    def __init__(self):
+        pass
+
+    def call_pmd(self, pmd_dir, project_dir):
+        pop = os.popen(self.PMD_CLI % (pmd_dir, project_dir, pmd_dir))
+        comb = []
+        for p in pop:
+            comb.append(p)
+        return comb
+
 class CodeSmellFile(object):
 
     def __init__(self, file_name):
@@ -17,8 +31,8 @@ class CodeSmellFile(object):
 
 class CodeSmellAnalyzer(object):
 
-    def __init__(self):
-        pass
+    def __init__(self, pmd):
+        self.__pmd = pmd
 
     def get_code_smells(self, pmd_dir, project_dir):
         """
@@ -27,7 +41,7 @@ class CodeSmellAnalyzer(object):
         :param pmd_dir: The directory of the PMD code smell analyzer
         :param project_dir: Directory of project to analyze
         """
-        pop = os.popen(PMD_CLI % (pmd_dir, project_dir, pmd_dir))
+        pop = self.__pmd.call_pmd(pmd_dir, project_dir)
 
         code_smells = dict()
         for pmd_result in pop:

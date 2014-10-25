@@ -1,6 +1,6 @@
 from github_repo import get_merge_request_shas, is_dir_git_repo
 from util import *
-from code_smell import CodeSmellAnalyzer, CodeSmellFile
+from code_smell import CodeSmellAnalyzer, CodeSmellFile, PMDCodeSmell
 from random import randint
 import config
 import json
@@ -38,6 +38,7 @@ os.chdir(project_dir)
 shas = get_merge_request_shas(project_dir)
 print "Retrieved Pull Request %d shas" % len(shas)
 
+pmd_cs = PMDCodeSmell()
 code_smell_analyzer = CodeSmellAnalyzer()
 
 root_json_dict = dict()
