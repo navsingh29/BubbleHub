@@ -34,8 +34,6 @@ function loadJSON(path, success, error) {
 function beginAnimation(data) {
     var numCommits = data.commits.length;
 
-    var svgContainer = createSVGContainer();
-
     // This loop is where all the commits will be analyzed and displayed in UI
     for(var i = 0; i < numCommits; i++) {
 
@@ -56,39 +54,27 @@ function beginAnimation(data) {
             commitFileVisuals.push(newFileVisualObject);
         }
 
-        // clear the canvas for next "frame"
-        clearCanvas(svgContainer);
+        function sleepy() {
+            var c = commitFileVisuals;
+            sleep(i * 1000, function () {
+                createVisual(c);
+            });
+        }
+        sleepy();
 
-        svgContainer = createSVGContainer();
-        // create the next set of bubbles (ie: frame) obtained from the current commit
-        createFrame(commitFileVisuals, svgContainer);
     }
 }
 
-function createSVGContainer() {
-    // Create SVG container of x and y = 960
-    var size = 960;
-    return d3.select("body").append("svg")
-                            .attr("width", size)
-                            .attr("height", size);
+/**
+ * Method taken from stack overflow
+ * http://stackoverflow.com/questions/951021/what-do-i-do-if-i-want-a-javascript-version-of-sleep
+ */
+function sleep(millis, callback) {
+    setTimeout(function()
+        { callback(); }
+        , millis);
 }
 
-/**
- * Clear the canvas of the webpage
- */
-function clearCanvas(svgContainer) {
-    svgContainer.remove();
-}
-
-/**
- * Create the "frame" with the appropriate file visual images
- *
- * @param fileVisualObjects The list of file visual objects
- */
-function createFrame(fileVisualObjects, svgContainer) {
-    // Create file visual image; bubbles right now
-    createBubbleImages(fileVisualObjects, svgContainer);
-}
 
 /**
  * Main function that starts program execution

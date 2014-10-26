@@ -1,6 +1,39 @@
 /**
  * Created by gurkaran on 2014-10-22.
  */
+var diameter = 960,
+    color = d3.scale.category20c();
+
+var bubble = d3.layout.pack()
+    .sort(null)
+    .size([diameter, diameter])
+    .padding(1.5);
+
+var svg = null;
+
+function createVisual(data){
+    recreateSvg();
+    var node = svg.selectAll(".node")
+        .data(bubble.nodes({children:data}))
+        .enter().append("g")
+        .attr("class", "node")
+        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+
+    node.append("circle")
+        .attr("r", function(d) { return d.radius; })
+        .style("fill", function(d) { return color(d.color); });
+}
+
+function recreateSvg(){
+
+    if(svg!=null){
+        svg.remove();
+    }
+    svg = d3.select("body").append("svg")
+        .attr("width", diameter)
+        .attr("height", diameter)
+        .attr("class", "bubble");
+}
 
 /**
  * Creates a bubble object from the given file representation
@@ -14,6 +47,7 @@ function createBubbleObject(currFile) {
     newBubble.centreX = getBubbleCentreX();
     newBubble.centreY = getBubbleCentreY();
     newBubble.radius = getBubbleRadius(currFile.complexity);
+    newBubble.value = 1;
     newBubble.color = getBubbleColour(currFile.smells);
     return newBubble;
 }
@@ -39,12 +73,12 @@ function createBubbleImages(bubbles, svgContainer) {
 
 function getBubbleCentreX() {
     // TODO stub
-    return 400;
+    return 200;
 }
 
 function getBubbleCentreY() {
     // TODO stub
-    return 400;
+    return 200;
 }
 
 function getBubbleRadius(complexity) {

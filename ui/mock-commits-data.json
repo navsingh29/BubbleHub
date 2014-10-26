@@ -1,12 +1,12 @@
 {
     "commits" : [
         [
-            { "fileName" : "MainFile", "complexity" : "10" , "smells" : "10" },
-            { "fileName" : "SecondFile", "complexity" : "50" , "smells" : "50" }
+            { "fileName" : "MainFile", "complexity" : 10 , "smells" : 10 },
+            { "fileName" : "SecondFile", "complexity" : 50 , "smells" : 50 }
         ],
         [
-            { "fileName" : "MainFile", "complexity" : "25" , "smells" : "25" },
-            { "fileName" : "SecondFile", "complexity" : "90" , "smells" : "90" }
+            { "fileName" : "MainFile", "complexity" : 25 , "smells" : 25 },
+            { "fileName" : "SecondFile", "complexity" : 90 , "smells" : 90 }
         ]
     ]
 }
