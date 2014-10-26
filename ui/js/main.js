@@ -59,11 +59,22 @@ function beginAnimation(data) {
     }
 }
 
+function getDataUsingD3(){
+    var configFile = "config.json";
+    d3.json(configFile, function(error, root) {
+        d3.json(root.input_json, function(error2, root2) {
+            beginAnimation(root2);
+        });
+        }
+    );
+}
 
 /**
  * Main function that starts program execution
  */
 function main() {
+    getDataUsingD3();
+    /*
     var configFile = "config.json";
     loadJSON(
         configFile,
@@ -75,6 +86,7 @@ function main() {
             );
         },
         function() { document.write("Error getting JSON config from config file: " + configFile); });
+    */
 }
 
 // Call the main function to start program execution
