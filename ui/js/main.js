@@ -47,33 +47,16 @@ function beginAnimation(data) {
 
         // This loop populates the list of bubbles based on current commit
         for(var j = 0; j < numFiles; j++) {
-
             // Create the file visual object based on required visual (bubble in this case)
             var newFileVisualObject = createBubbleObject(currCommit[j]);
-
             commitFileVisuals.push(newFileVisualObject);
         }
-
-
         function sleepy() {
             var c = commitFileVisuals; // Use a closure to hold onto this value
-            sleep(i * 1000, function () {
-                createVisual(c);
-            });
+            setTimeout(function() { createVisual(c); }, i * 1000);
         }
         sleepy();
-
     }
-}
-
-/**
- * Method taken from stack overflow
- * http://stackoverflow.com/questions/951021/what-do-i-do-if-i-want-a-javascript-version-of-sleep
- */
-function sleep(millis, callback) {
-    setTimeout(function()
-        { callback(); }
-        , millis);
 }
 
 

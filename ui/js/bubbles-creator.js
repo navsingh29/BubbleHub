@@ -2,12 +2,14 @@
  * Created by gurkaran on 2014-10-22.
  */
 var diameter = 960;
-var color = d3.scale.category20c();
+function comparator(a, b) {return b.fileName.localeCompare(a.fileName);}
+
 
 var bubble = d3.layout.pack()
-    .sort(null)
+    .sort(comparator)
     .size([diameter, diameter])
-    .value(function(d) {return d.radius;})
+    .value(function(d) {return (d.radius)^2;})
+    //.value(function(d) {return d.fileName;})
     .padding(1.5);
 
 var svg = null;
@@ -15,19 +17,24 @@ var svg = null;
 function createVisual(data){
     recreateSvg();
     var node = svg.selectAll(".node")
-        .data(bubble.nodes({children:data}))
+        .data(bubble.nodes({children:data, fileName:"", color:"rgba(255,255,255,0.0)"}))
         .enter().append("g")
         .attr("class", "node")
         .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
     node.append("circle")
         .attr("r", function(d) { return d.r; })
-        .style("fill", function(d) {
-            if(d.color==null)
-                return "rgba(255,255,255,0.0)";
-            else
-                return d.color;
-        });
+        .style("fill", function(d) { return d.color; })
+    ;
+    // Uncomment the following to dispaly class names on bubbles
+/*
+    node.append("text")
+        .attr("dy", ".3em")
+        .style("text-anchor", "middle")
+        .text(function(d) {
+            var name = d.className;
+            return name;});
+    */
 }
 
 function recreateSvg(){
@@ -49,9 +56,9 @@ function recreateSvg(){
  */
 function createBubbleObject(currFile) {
     var newBubble = {}
-    newBubble.fileName = currFile.fileName;
-    newBubble.centreX = getBubbleCentreX();
-    newBubble.centreY = getBubbleCentreY();
+    var name = currFile.fileName;
+    newBubble.className = name.substring(name.lastIndexOf("/")+1, name.lastIndexOf("."));
+    newBubble.fileName = name;
     newBubble.radius = getBubbleRadius(currFile.complexity);
     newBubble.color = getBubbleColour(currFile.smells);
     return newBubble;
@@ -68,23 +75,8 @@ function createBubbleImages(bubbles, svgContainer) {
                               .data(bubbles)
                               .enter()
                               .append("circle");
-
-    var circleAttributes = circles
-                           .attr("cx", function (bubble) { return bubble.centreX; })
-                           .attr("cy", function (bubble) { return bubble.centreY; })
-                           .attr("r", function (bubble) { return bubble.radius; })
-                           .style("fill", function(bubble) {return bubble.color;});
 }
 
-function getBubbleCentreX() {
-    // TODO stub
-    return 200;
-}
-
-function getBubbleCentreY() {
-    // TODO stub
-    return 200;
-}
 
 function getBubbleRadius(complexity) {
     // TODO stub
