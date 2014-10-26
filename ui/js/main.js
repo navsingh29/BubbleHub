@@ -54,8 +54,9 @@ function beginAnimation(data) {
             commitFileVisuals.push(newFileVisualObject);
         }
 
+
         function sleepy() {
-            var c = commitFileVisuals;
+            var c = commitFileVisuals; // Use a closure to hold onto this value
             sleep(i * 1000, function () {
                 createVisual(c);
             });

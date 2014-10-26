@@ -1,12 +1,13 @@
 /**
  * Created by gurkaran on 2014-10-22.
  */
-var diameter = 960,
-    color = d3.scale.category20c();
+var diameter = 960;
+var color = d3.scale.category20c();
 
 var bubble = d3.layout.pack()
     .sort(null)
     .size([diameter, diameter])
+    .value(function(d) {return d.radius;})
     .padding(1.5);
 
 var svg = null;
@@ -20,18 +21,23 @@ function createVisual(data){
         .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
 
     node.append("circle")
-        .attr("r", function(d) { return d.radius; })
-        .style("fill", function(d) { return color(d.color); });
+        .attr("r", function(d) { return d.r; })
+        .style("fill", function(d) {
+            if(d.color==null)
+                return "rgba(255,255,255,0.0)";
+            else
+                return d.color;
+        });
 }
 
 function recreateSvg(){
-
     if(svg!=null){
         svg.remove();
     }
     svg = d3.select("body").append("svg")
         .attr("width", diameter)
         .attr("height", diameter)
+        .style("background-color", "#1C6BA0")
         .attr("class", "bubble");
 }
 
@@ -47,7 +53,6 @@ function createBubbleObject(currFile) {
     newBubble.centreX = getBubbleCentreX();
     newBubble.centreY = getBubbleCentreY();
     newBubble.radius = getBubbleRadius(currFile.complexity);
-    newBubble.value = 1;
     newBubble.color = getBubbleColour(currFile.smells);
     return newBubble;
 }
