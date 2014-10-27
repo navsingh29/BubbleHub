@@ -1,3 +1,4 @@
+import config
 import unittest
 import code_smell
 import code_complexity
@@ -6,6 +7,8 @@ import os
 
 # Test value configs
 FIZZ_BUZZ_PROJECT_DIR = "/Users/Ben/Projects/FizzBuzzEnterpriseEdition"
+PMD_DIR_KEY = "pmd_dir"
+PLYJ_DIR_KEY = "plyj_dir"
 
 class CodeComplexityIntegrationTests(unittest.TestCase):
 
@@ -46,12 +49,10 @@ class CodeComplexityIntegrationTests(unittest.TestCase):
 
 class CodeSmellAnalyzerIntegrationTests(unittest.TestCase):
 
-    PMD_DIR = "pmd"
-
     def setUp(self):
         """Setup"""
         self.code_smeller = code_smell.CodeSmellAnalyzer(code_smell.PMDCodeSmell())
-        self.pmd_dir = os.path.join(os.getcwd(), self.PMD_DIR)
+        self.pmd_dir = config.config[PMD_DIR_KEY]
         self.test_proj_dir = os.path.join(os.getcwd(), FIZZ_BUZZ_PROJECT_DIR)
 
     def tearDown(self):

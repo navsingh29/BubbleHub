@@ -1,6 +1,7 @@
 # So we can import the nested plyj project
 import sys
-sys.path.insert(0, "plyj")
+import config
+sys.path.insert(0, config.config["plyj_dir"])
 
 from models import JavaClass, JavaVariableBinding, JavaMethod, JavaInterface
 import os

@@ -2,7 +2,6 @@ from random import randint
 import unittest
 import mock
 import code_smell
-import code_complexity
 import github_repo
 import os
 import util
@@ -14,12 +13,11 @@ class CodeSmellAnalyzerMockUnitTests(unittest.TestCase):
 
     # Values do not matter because we're mocking out the call to the pmd
     PMD_DIR = "pmd"
-    PROJECT_DIR = ""
+    PROJECT_DIR = "project"
 
     def setUp(self):
         """Setup"""
         # Create the PMDCodeSmell mock
-        self.pmd_dir = os.path.join(os.getcwd(), self.PMD_DIR)
         self.test_proj_dir = os.path.join(os.getcwd(), FIZZ_BUZZ_PROJECT_DIR)
 
     def tearDown(self):
