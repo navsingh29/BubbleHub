@@ -29,3 +29,15 @@ You will then need to point BubbleHub to these two libraries. You can do this by
 
 After those are setup, just run the main script.
 
+
+To run tests for the analyzer
+==============
+Change dir to /BubbleHub/Analyzer.
+
+> nosetests
+----------------------------------------------------------------------
+Ran 20 tests in 2.645s
+
+OK
+
+
