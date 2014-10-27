@@ -2,29 +2,6 @@
  * Created by gurkaran on 2014-10-17.
  */
 
-/**
- * Get JSON data from file (without using jQuery)
- *
- * @param path The path of the JSON file
- * @param success The function to call if parsing of JSON file is successful
- * @param error The function to call if parsing fails
- */
-function loadJSON(path, success, error) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                if (success)
-                    success(JSON.parse(xhr.responseText));
-            } else {
-                if (error)
-                    error();
-            }
-        }
-    };
-    xhr.open("GET", path, true);
-    xhr.send();
-}
 
 /**
  * Callback for JSON parser, begins the animation for the provided data
@@ -62,6 +39,8 @@ function beginAnimation(data) {
 function getDataUsingD3(){
     var configFile = "config.json";
     d3.json(configFile, function(error, root) {
+            if(error)
+                alert("Error retrieving commit data from JSON file. Please try using a different browser.");
         d3.json(root.input_json, function(error2, root2) {
             beginAnimation(root2);
         });
@@ -74,19 +53,6 @@ function getDataUsingD3(){
  */
 function main() {
     getDataUsingD3();
-    /*
-    var configFile = "config.json";
-    loadJSON(
-        configFile,
-        function(config) {
-            loadJSON(
-                config.input_json,
-                beginAnimation,
-                function() { document.write("Error getting JSON data from commits data file: " + config.input_json); }
-            );
-        },
-        function() { document.write("Error getting JSON config from config file: " + configFile); });
-    */
 }
 
 // Call the main function to start program execution
