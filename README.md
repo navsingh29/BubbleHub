@@ -25,19 +25,20 @@ BubbleHub requires two libraries to be downloaded:
 * PLYJ (https://github.com/musiKk/plyj)
 * PMD @ http://pmd.sourceforge.net/
 
-You will then need to point BubbleHub to these two libraries. You can do this by updating 'config.json' and update the 'plyj_directory' and 'pmd_directory' to point to the root of path of those two libraries.
+You will then need to point BubbleHub to these two libraries. You can do this by updating ui/config.json and update the 'plyj_directory' and 'pmd_directory' to point to the root of path of those two libraries.
+
+Make sure the virtualenvironment is activated with the analyzer/requirements.txt.
 
 After those are setup, just run the main script.
-
 
 To run tests for the analyzer
 ==============
 Change dir to /BubbleHub/Analyzer.
 
-> nosetests
-----------------------------------------------------------------------
-Ran 20 tests in 2.645s
-
-OK
+&gt;> nosetests
+  ----------------------------------------------------------------------
+  Ran 20 tests in 2.645s
+  
+  OK
 
 
