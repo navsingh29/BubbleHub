@@ -52,7 +52,7 @@ function recreateSvg(){
     svg = d3.select("#vis").append("svg")
         .attr("width", width)
         .attr("height", height)
-        .style("background-color", "#1C6BA0")
+        //.style("background-color", "#1C6BA0")
         .attr("class", "bubble");
 }
 
