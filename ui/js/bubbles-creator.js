@@ -4,13 +4,14 @@
 
 
 // Diameter of the outermost circle in the visual
-var diameter = 960;
+var width = document.getElementById('vis').clientWidth;//960;
+var height = document.getElementById('vis').clientHeight;
 // Function that determines ordering of bubbles
 function comparator(a, b) {return b.fileName.localeCompare(a.fileName);}
 //Using d3.layout.pack to display the bubbles
 var bubble = d3.layout.pack()
     .sort(comparator)
-    .size([diameter, diameter])
+    .size([width, height])
     .value(function(d) {return d.complexity;})
     .padding(1.5);
 
@@ -48,9 +49,9 @@ function recreateSvg(){
     if(svg!=null){
         svg.remove();
     }
-    svg = d3.select("body").append("svg")
-        .attr("width", diameter)
-        .attr("height", diameter)
+    svg = d3.select("#vis").append("svg")
+        .attr("width", width)
+        .attr("height", height)
         .style("background-color", "#1C6BA0")
         .attr("class", "bubble");
 }
