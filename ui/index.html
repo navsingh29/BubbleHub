@@ -57,6 +57,11 @@
                 /* background-color: #1C6BA0; */
                 background-color: rgba(28,107,160,0.5);
             }
+            #play{
+                position: fixed;
+                width: 35px;
+                height: 35px;
+            }
         </style>
     </head>
     <body>
@@ -67,8 +72,10 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div id="vis"
-                ></div>
+        <div id="vis">
+            <button id="play" onclick="onPlay(this)">&#9612;&#9612;</button>
+
+        </div>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="js/bubbles-creator.js" charset="utf-8"></script>
         <script src="js/main.js"></script>

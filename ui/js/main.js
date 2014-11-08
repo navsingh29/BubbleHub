@@ -2,6 +2,10 @@
  * Created by gurkaran on 2014-10-17.
  */
 
+var isPlaying = true;
+var allCommits;
+var currentScene = 0;
+var animationScheduled = false;
 
 /**
  * Callback for JSON parser, begins the animation for the provided data
@@ -10,7 +14,7 @@
  */
 function beginAnimation(data) {
     var numCommits = data.commits.length;
-
+    allCommits = [];
     // This loop is where all the commits will be analyzed and displayed in UI
     for(var i = 0; i < numCommits; i++) {
 
@@ -28,12 +32,31 @@ function beginAnimation(data) {
             var newFileVisualObject = createBubbleObject(currCommit[j]);
             commitFileVisuals.push(newFileVisualObject);
         }
+
+        allCommits.push(commitFileVisuals);
+        /*
         function sleepy() {
             var c = commitFileVisuals; // Use a closure to hold onto this value
             setTimeout(function() { createVisual(c); }, i * 1000);
         }
         sleepy();
+        */
     }
+    runVisual();
+
+}
+
+function runVisual(){
+    if(!isPlaying) {
+        animationScheduled = false;
+        return;
+    }
+    createVisual(allCommits[currentScene]);
+    setTimeout(function() {
+        currentScene++;
+        animationScheduled = true;
+        runVisual();
+    }, 1000);
 }
 
 function getDataUsingD3(){
@@ -47,6 +70,17 @@ function getDataUsingD3(){
         }
     );
 }
+
+function onPlay(buttonElem){
+    isPlaying = !isPlaying;
+    if(isPlaying)
+        buttonElem.innerHTML = "&#9612;&#9612;";
+    else
+        buttonElem.innerHTML = " &#9658; ";
+    if(!animationScheduled) //make sure run visual isn't running twice
+        runVisual();
+}
+
 
 /**
  * Main function that starts program execution
