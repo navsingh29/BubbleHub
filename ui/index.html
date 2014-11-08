@@ -37,28 +37,36 @@
                 top: 33%;
                 transform: translateY(-33%);
             }
-            #vis {
+            #vis-outer  {
                 height:80%;
                 border: 2px red solid;
                 background-image: url('http://upload.wikimedia.org/wikipedia/commons/0/0f/Aquarium_in_HK_Ocean_Park.jpg');
           /*      background-image: url('http://awesomeocean.com/wp-content/uploads/2014/10/life_under_the_ocean-wide.jpg'); */
            /*     background-image: url('http://cdn.phys.org/newman/gfx/news/hires/diving_ocean-792387.jpg'); */
-
+                overflow: hidden;
                 background-size: 100% 100%;
                 background-repeat: no-repeat;
 
             }
-            header, #vis {
+            header, #vis-outer {
                 margin-left: auto;
                 margin-right: auto;
                 width: 80%;
+                position: relative;
+            }
+            #vis {
+                height: 100%;
+                width: 100%;
+                background-color: rgba(28,107,160,0.5);
             }
             .bubble{
                 /* background-color: #1C6BA0; */
-                background-color: rgba(28,107,160,0.5);
+
             }
             #play{
-                position: fixed;
+                position: absolute;
+                top: 0px;
+                left: 0px;
                 width: 35px;
                 height: 35px;
             }
@@ -72,9 +80,10 @@
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-        <div id="vis">
-            <button id="play" onclick="onPlay(this)">&#9612;&#9612;</button>
-
+        <div id="vis-outer">
+            <div id="vis">
+                <button id="play" onclick="onPlay(this)">&#9612;&#9612;</button>
+            </div>
         </div>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="js/bubbles-creator.js" charset="utf-8"></script>
