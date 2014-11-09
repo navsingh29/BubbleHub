@@ -1,4 +1,6 @@
 from random import randint
+import models
+import code_complexity
 import unittest
 import mock
 import code_smell
@@ -8,6 +10,32 @@ import util
 
 # Test value configs
 FIZZ_BUZZ_PROJECT_DIR = "/Users/Ben/Projects/FizzBuzzEnterpriseEdition"
+
+class CodeComplexityMockUnitTest(unittest.TestCase):
+
+    def setUp(self):
+        """Setup"""
+        self.code_complexity = code_complexity.CodeComplexityAnalyzer()
+        self.method = models.JavaMethod("")
+
+    def tearDown(self):
+        """Teardown."""
+        pass
+
+    def test_calculate_method_private_void(self):
+        score = self.code_complexity.calculate_method_complexity(self.method)
+        self.assertEqual(0, score)
+
+    def test_calculate_return_primitive(self):
+        self.method.return_type = "byte"
+        score = self.code_complexity.calculate_method_complexity(self.method)
+        self.assertEqual(2,score)
+
+    def test_calculate_return_Object(self):
+        self.method.return_type = "SomeObject"
+        score = self.code_complexity.calculate_method_complexity(self.method)
+        self.assertEqual(5,score)
+
 
 class CodeSmellAnalyzerMockUnitTests(unittest.TestCase):
 
@@ -198,7 +226,8 @@ class UtilsUnitTests(unittest.TestCase):
 
     def tearDown(self):
         """Teardown."""
-        os.remove(self.test_file_path)
+        if os.path.exists(self.test_file_path):
+            os.remove(self.test_file_path)
 
     def test_get_num_lines_in_file(self):
         expected_lines = randint(1, 500)
@@ -219,6 +248,10 @@ class UtilsUnitTests(unittest.TestCase):
         with open(self.test_file_path, "w") as f:
             os.utime(self.test_file_path, None)
         self.assertRaises(ValueError, util.strip_full_file_path, self.test_file_path, "DoesNotExist")
+
+    def test_get_root_dir(self):
+        rd = util.get_root_dir()
+        self.assertEqual("BubbleHub", os.path.split(rd)[-1])
 
 if __name__ == "__main__":
     unittest.main()

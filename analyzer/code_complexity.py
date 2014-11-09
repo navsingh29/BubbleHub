@@ -16,9 +16,14 @@ class CodeComplexityAnalyzer(object):
         }
 
     VOID = "void"
+    OBJECT = "Object"
 
     def __init__(self):
-        pass
+        self.return_scores = dict()
+        self.return_scores[self.VOID] = 0
+        self.return_scores[self.OBJECT] = 5
+        for p in self.PRIMITIVES:
+            self.return_scores[p] = 2
 
     def calculate_complexity(self, java_class):
         """
@@ -29,10 +34,53 @@ class CodeComplexityAnalyzer(object):
         #TODO:
         pass
 
-    def is_primitive(self, j_type):
+    def calculate_method_complexity(self, java_method):
+        """
+        Calculates the complexity of a Java method.
+        :param java_method: A JavaMethod object
+        """
+        #TODO:
+        score = 0
+
+        # Calculate return type
+        score += self.__return_type_score(java_method.return_type)
+        return score
+
+    def normalize_complexity(self, score):
+        """
+        Normalizes the score to a uniform value.
+        :param score: A score value to be normalized
+
+        :return: A uniform value between 0 and 1
+        """
+        # TODO
+        pass
+
+    def __return_type_score(self, t):
+        """
+        Gets the return type score
+        :param t: Return type in Str representation
+        """
+        if not t:
+            return 0
+
+        score = self.return_scores.get(t)
+        if score:
+            return score
+        else:
+            return self.return_scores[self.OBJECT]
+
+    def __param_type_score(self, t):
+        """
+        Gets the parameter type score
+        : param t: Parameter type in Str representation
+        """
+        return self.__return_type_score(t)
+
+    def __is_primitive(self, j_type):
         return j_type in self.PRIMITIVES
 
-    def is_return_void(self, return_type):
+    def __is_return_void(self, return_type):
         return return_type == self.VOID
 
 class JavaParser(m.Visitor):
