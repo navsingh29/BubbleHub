@@ -4,5 +4,7 @@
     "pmd_dir" : "/Users/Ben/Projects/BubbleHub/analyzer/pmd",
     "plyj_dir" : "/Users/Ben/Projects/BubbleHub/analyzer/plyj",
 
-    "input_json" : "sample.json"
+    "input_json" : "sample.json",
+
+    "ruleset" : "ruleset.xml"
 }

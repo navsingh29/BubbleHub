@@ -1,18 +1,18 @@
 import os
 import re
+import util
 
-PMD_CLI = "%s/bin/run.sh pmd -d %s -f text -R %s/rulesets/basic.xml -version 1.7 -language java"
 
 class PMDCodeSmell(object):
 
-    # TODO: Change up the rulesets
-    PMD_CLI = "%s/bin/run.sh pmd -d %s -f text -R %s/rulesets/basic.xml -version 1.7 -language java"
+    PMD_CLI = "%s/bin/run.sh pmd -d %s -f text -R %s -version 1.7 -language java"
 
     def __init__(self):
         pass
 
     def call_pmd(self, pmd_dir, project_dir):
-        pop = os.popen(self.PMD_CLI % (pmd_dir, project_dir, pmd_dir))
+        call = self.PMD_CLI % (pmd_dir, project_dir, util.get_ruleset_path())
+        pop = os.popen(call)
         comb = []
         for p in pop:
             comb.append(p)

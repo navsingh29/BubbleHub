@@ -1,4 +1,5 @@
 import os
+from config import config
 
 def get_num_lines_in_file(file_path):
     """
@@ -46,5 +47,15 @@ def strip_full_file_path(file_path, project_name):
 def checkout_sha(sha):
     os.system("git checkout .")
     os.system("git checkout %s" % sha)
+
+
+def get_root_dir():
+    analyzer_dir = os.path.dirname(os.path.abspath(__file__))
+    root_dir = os.path.dirname(analyzer_dir)
+    return root_dir
+
+def get_ruleset_path():
+    rs =  os.path.join(get_root_dir(), config['ruleset'])
+    return rs
 
 
