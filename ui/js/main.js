@@ -2,29 +2,10 @@
  * Created by gurkaran on 2014-10-17.
  */
 
-/**
- * Get JSON data from file (without using jQuery)
- *
- * @param path The path of the JSON file
- * @param success The function to call if parsing of JSON file is successful
- * @param error The function to call if parsing fails
- */
-function loadJSON(path, success, error) {
-    var xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function() {
-        if (xhr.readyState === XMLHttpRequest.DONE) {
-            if (xhr.status === 200) {
-                if (success)
-                    success(JSON.parse(xhr.responseText));
-            } else {
-                if (error)
-                    error();
-            }
-        }
-    };
-    xhr.open("GET", path, true);
-    xhr.send();
-}
+var isPlaying = true;
+var allCommits;
+var currentScene = 0;
+var animationScheduled = false;
 
 /**
  * Callback for JSON parser, begins the animation for the provided data
@@ -33,7 +14,7 @@ function loadJSON(path, success, error) {
  */
 function beginAnimation(data) {
     var numCommits = data.commits.length;
-
+    allCommits = [];
     // This loop is where all the commits will be analyzed and displayed in UI
     for(var i = 0; i < numCommits; i++) {
 
@@ -51,17 +32,38 @@ function beginAnimation(data) {
             var newFileVisualObject = createBubbleObject(currCommit[j]);
             commitFileVisuals.push(newFileVisualObject);
         }
+
+        allCommits.push(commitFileVisuals);
+        /*
         function sleepy() {
             var c = commitFileVisuals; // Use a closure to hold onto this value
             setTimeout(function() { createVisual(c); }, i * 1000);
         }
         sleepy();
+        */
     }
+    runVisual();
+
+}
+
+function runVisual(){
+    if(!isPlaying) {
+        animationScheduled = false;
+        return;
+    }
+    createVisual(allCommits[currentScene]);
+    setTimeout(function() {
+        currentScene++;
+        animationScheduled = true;
+        runVisual();
+    }, 1000);
 }
 
 function getDataUsingD3(){
     var configFile = "config.json";
     d3.json(configFile, function(error, root) {
+            if(error)
+                alert("Error retrieving commit data from JSON file. Please try using a different browser.");
         d3.json(root.input_json, function(error2, root2) {
             beginAnimation(root2);
         });
@@ -69,24 +71,22 @@ function getDataUsingD3(){
     );
 }
 
+function onPlay(buttonElem){
+    isPlaying = !isPlaying;
+    if(isPlaying)
+        buttonElem.innerHTML = "&#9612;&#9612;";
+    else
+        buttonElem.innerHTML = " &#9658; ";
+    if(!animationScheduled) //make sure run visual isn't running twice
+        runVisual();
+}
+
+
 /**
  * Main function that starts program execution
  */
 function main() {
     getDataUsingD3();
-    /*
-    var configFile = "config.json";
-    loadJSON(
-        configFile,
-        function(config) {
-            loadJSON(
-                config.input_json,
-                beginAnimation,
-                function() { document.write("Error getting JSON data from commits data file: " + config.input_json); }
-            );
-        },
-        function() { document.write("Error getting JSON config from config file: " + configFile); });
-    */
 }
 
 // Call the main function to start program execution

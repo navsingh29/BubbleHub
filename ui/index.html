@@ -7,20 +7,87 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>BubbleHub</title>
-        <h2>CPSC 410 Project BubbleHub</h2>
-        <h3>by Team ByteAteBits</h3>
+
         <link rel="shortcut icon" href="img/favicon.ico">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+            html {
+                width: 100%;
+                height:100%;
+
+            }
+            body {
+                width: 100%;
+                height:100%;
+
+                text-align: center;
+            }
+            html, body, h2, h3 {
+                border-width: 0px;
+                margin: 0px;
+                padding: 0px;
+            }
+            header {
+                width: 80%;
+                height:15%;
+            }
+            h2, h3 {
+                position: relative;
+                top: 33%;
+                transform: translateY(-33%);
+            }
+            #vis-outer  {
+                height:80%;
+                border: 2px red solid;
+                background-image: url('http://upload.wikimedia.org/wikipedia/commons/0/0f/Aquarium_in_HK_Ocean_Park.jpg');
+          /*      background-image: url('http://awesomeocean.com/wp-content/uploads/2014/10/life_under_the_ocean-wide.jpg'); */
+           /*     background-image: url('http://cdn.phys.org/newman/gfx/news/hires/diving_ocean-792387.jpg'); */
+                overflow: hidden;
+                background-size: 100% 100%;
+                background-repeat: no-repeat;
+
+            }
+            header, #vis-outer {
+                margin-left: auto;
+                margin-right: auto;
+                width: 80%;
+                position: relative;
+            }
+            #vis {
+                height: 100%;
+                width: 100%;
+                background-color: rgba(28,107,160,0.5);
+            }
+            .bubble{
+                /* background-color: #1C6BA0; */
+
+            }
+            #play{
+                position: absolute;
+                top: 0px;
+                left: 0px;
+                width: 35px;
+                height: 35px;
+            }
+        </style>
     </head>
     <body>
+        <header>
+            <h2>CPSC 410 Project BubbleHub</h2>
+            <h3>by Team ByteAteBits</h3>
+        </header>
         <!--[if lt IE 7]>
             <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
         <![endif]-->
-
+        <div id="vis-outer">
+            <div id="vis">
+                <button id="play" onclick="onPlay(this)">&#9612;&#9612;</button>
+            </div>
+        </div>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="js/bubbles-creator.js" charset="utf-8"></script>
         <script src="js/main.js"></script>
-        <a href="tests/tests.html">Tests Here</a>
+        <!-- <a href="tests/tests.html">Tests Here<br></a> -->
     </body>
 </html>

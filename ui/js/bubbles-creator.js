@@ -1,19 +1,25 @@
 /**
- * Created by gurkaran on 2014-10-22.
+ *  JS file that deals with display logic
  */
-var diameter = 960;
+
+
+// Diameter of the outermost circle in the visual
+var width = document.getElementById('vis').clientWidth;//960;
+var height = document.getElementById('vis').clientHeight;
+// Function that determines ordering of bubbles
 function comparator(a, b) {return b.fileName.localeCompare(a.fileName);}
-
-
+//Using d3.layout.pack to display the bubbles
 var bubble = d3.layout.pack()
     .sort(comparator)
-    .size([diameter, diameter])
-    .value(function(d) {return (d.radius)^2;})
-    //.value(function(d) {return d.fileName;})
+    .size([width, height])
+    .value(function(d) {return d.complexity;})
     .padding(1.5);
 
 var svg = null;
 
+/**
+ * Given an array of bubble objects, displays them on the SVG
+ */
 function createVisual(data){
     recreateSvg();
     var node = svg.selectAll(".node")
@@ -26,25 +32,27 @@ function createVisual(data){
         .attr("r", function(d) { return d.r; })
         .style("fill", function(d) { return d.color; })
     ;
+
     // Uncomment the following to dispaly class names on bubbles
-/*
+    /*
     node.append("text")
         .attr("dy", ".3em")
         .style("text-anchor", "middle")
-        .text(function(d) {
-            var name = d.className;
-            return name;});
+        .text(function(d) { return d.className; });
     */
 }
 
+/**
+ * Add a blank SVG to the DOM replacing the previous one if it exists
+ */
 function recreateSvg(){
     if(svg!=null){
         svg.remove();
     }
-    svg = d3.select("body").append("svg")
-        .attr("width", diameter)
-        .attr("height", diameter)
-        .style("background-color", "#1C6BA0")
+    svg = d3.select("#vis").append("svg")
+        .attr("width", width)
+        .attr("height", height)
+        //.style("background-color", "#1C6BA0")
         .attr("class", "bubble");
 }
 
@@ -59,28 +67,9 @@ function createBubbleObject(currFile) {
     var name = currFile.fileName;
     newBubble.className = name.substring(name.lastIndexOf("/")+1, name.lastIndexOf("."));
     newBubble.fileName = name;
-    newBubble.radius = getBubbleRadius(currFile.complexity);
+    newBubble.complexity = currFile.complexity;
     newBubble.color = getBubbleColour(currFile.smells);
     return newBubble;
-}
-
-/**
- * Create the bubbles image for the given Bubbles
- *
- * @param bubbles The list of bubbles to create the images for
- */
-function createBubbleImages(bubbles, svgContainer) {
-    // TODO Just creating simple circles for now
-    var circles = svgContainer.selectAll("circle")
-                              .data(bubbles)
-                              .enter()
-                              .append("circle");
-}
-
-
-function getBubbleRadius(complexity) {
-    // TODO stub
-    return complexity / 2;
 }
 
 function getBubbleColour(smells) {
@@ -89,12 +78,10 @@ function getBubbleColour(smells) {
     // (0% is completely dirty, 100% is completely clean)
     // 50% lightness is "normal colour"
     // http://www.w3.org/TR/css3-color/#hsl-examples
-    // TODO stub
     var dirtLevel = getBubbleDirt(smells);
     return "hsl(210, " + dirtLevel + "%, 50%)";
 }
 
 function getBubbleDirt(smells) {
-    // TODO stub
     return smells / 2;
 }

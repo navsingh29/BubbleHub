@@ -1,14 +1,24 @@
 <!DOCTYPE html>
-<html>
-<head lang="en">
-    <meta charset="UTF-8">
-    <title>BubbleHub Tests</title>
-    <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css">
-</head>
-<body>
-    <div id="qunit"></div>
-    <div id="qunit-fixture"></div>
-    <script src="//code.jquery.com/qunit/qunit-1.15.0.js"></script>
-    <script src="tests.js"></script>
-</body>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+    <html>
+    <head lang="en">
+        <meta charset="UTF-8">
+        <title>BubbleHub Tests</title>
+        <link rel="stylesheet" href="//code.jquery.com/qunit/qunit-1.15.0.css">
+    </head>
+    <body>
+        <!--[if lt IE 7]>
+        <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+
+        <div id="qunit"></div>
+        <div id="qunit-fixture"></div>
+        <script src="//code.jquery.com/qunit/qunit-1.15.0.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+        <script src="../js/bubbles-creator.js"></script>
+        <script src="tests.js"></script>
+    </body>
 </html>
