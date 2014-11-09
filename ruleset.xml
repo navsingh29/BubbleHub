@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<ruleset name="Custom ruleset"
+    xmlns="http://pmd.sourceforge.net/ruleset/2.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
+
+  <description>
+  This ruleset checks my code for bad stuff
+  </description>
+
+  <!-- We'll use the entire 'strings' ruleset -->
+
+  <!-- Here's some rules we'll specify one at a time -->
+  <rule ref="rulesets/java/unusedcode.xml/UnusedLocalVariable"/>
+  <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateField"/>
+
+
+  <!-- Now we'll customize a rule's property value -->
+  <rule ref="rulesets/java/codesize.xml/CyclomaticComplexity">
+    <properties>
+        <property name="reportLevel" value="5"/>
+    </properties>
+  </rule>
+
+</ruleset>

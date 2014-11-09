@@ -5,6 +5,7 @@ PMD_CLI = "%s/bin/run.sh pmd -d %s -f text -R %s/rulesets/basic.xml -version 1.7
 
 class PMDCodeSmell(object):
 
+    # TODO: Change up the rulesets
     PMD_CLI = "%s/bin/run.sh pmd -d %s -f text -R %s/rulesets/basic.xml -version 1.7 -language java"
 
     def __init__(self):
