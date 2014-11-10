@@ -1,7 +1,7 @@
 class JavaClass(object):
 
     def __init__(self, class_name, file_name=None, package=None, superclass=None):
-        self.class_name = class_name
+        self.name = class_name
         self.methods = []
         self.fields = []
         self.interfaces = []
@@ -43,12 +43,12 @@ class JavaClass(object):
         self.interfaces.append(interface)
 
     def __str__(self):
-        return "%s" % self.class_name
+        return "%s" % self.name
 
 class JavaInterface(JavaClass):
 
-    def __init__(self, interface_name, file_name=None, package=None, superclass=None):
-        self.interface_name = interface_name
+    def __init__(self, name, file_name=None, package=None, superclass=None):
+        self.name = name
         self._file_name = file_name
         self._package = package
         self.superclass = superclass
@@ -82,7 +82,7 @@ class JavaInterface(JavaClass):
         self.methods.append(method)
 
     def __str__(self):
-        return "%s -> extends %s" % (self.interface_name, ", ".join(self.extends))
+        return "%s -> extends %s" % (self.name, ", ".join(self.extends))
 
 class JavaVariableBinding(object):
 
@@ -128,5 +128,6 @@ class JavaMethod(object):
         params = ", ".join(str(param) for param in self.parameters)
 
         return "%s %s(%s)" % (self.return_type, self.method_name, params)
+
 
 

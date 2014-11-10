@@ -1,3 +1,4 @@
+from __future__ import division
 # So we can import the nested plyj project
 import sys
 import config
@@ -18,6 +19,8 @@ class CodeComplexityAnalyzer(object):
     VOID = "void"
     OBJECT = "Object"
 
+    MIN_VALUE = 20
+
     def __init__(self):
         self.return_scores = dict()
         self.return_scores[self.VOID] = 0
@@ -31,20 +34,42 @@ class CodeComplexityAnalyzer(object):
         :param java_class: a fleshed out JavaClass object containing the parsed
         components
         """
-        #TODO:
-        pass
+        score = 0
+
+        # Do methods
+        for method in java_class.methods:
+            score += self.calculate_method_complexity(method)
+
+        # Do class name length
+        if len(java_class.name) < 15:
+            score += len(java_class.name)/2
+
+        return int(score)
+        #return int(self.normalize_complexity(score))
 
     def calculate_method_complexity(self, java_method):
         """
         Calculates the complexity of a Java method.
         :param java_method: A JavaMethod object
         """
-        #TODO:
         score = 0
 
         # Calculate return type
         score += self.__return_type_score(java_method.return_type)
-        return score
+
+        # Get the parameters
+        for param in java_method.parameters:
+            score += self.__param_type_score(param.field_type)
+
+        # Variable name too long
+        if len(java_method.method_name) < 15:
+            score += (len(java_method.method_name)/2)
+
+        # Make private methods worth less
+        if java_method.visibility == "private":
+            score /= 2
+
+        return int(score)
 
     def normalize_complexity(self, score):
         """
@@ -53,8 +78,19 @@ class CodeComplexityAnalyzer(object):
 
         :return: A uniform value between 0 and 1
         """
-        # TODO
-        pass
+        # if score was less than 1, then the normalized value would be greater
+        # than 1
+        if score < 1:
+            import ipdb; ipdb.set_trace() # BREAKPOINT
+            return self.MIN_VALUE
+        normalized_score = 1.0 - (1.0/score)
+
+        # We want some kind of min value so bubbles have some shape even if
+        # their complexity is 0
+        if normalized_score < 0:
+            return self.MIN_VALUE
+
+        return int(normalized_score)
 
     def __return_type_score(self, t):
         """

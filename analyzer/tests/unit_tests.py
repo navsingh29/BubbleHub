@@ -16,7 +16,7 @@ class CodeComplexityMockUnitTest(unittest.TestCase):
     def setUp(self):
         """Setup"""
         self.code_complexity = code_complexity.CodeComplexityAnalyzer()
-        self.method = models.JavaMethod("")
+        self.method = models.JavaMethod("", visibility="public")
 
     def tearDown(self):
         """Teardown."""
