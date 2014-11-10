@@ -27,19 +27,39 @@ function createVisual(data){
         .enter().append("g")
         .attr("class", "node")
         .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
+/*
+    node.append("circle")
+        .attr("r", function(d) { return d.r; })
+        .style("fill", function(d) { return d.color; })
+    ;
+*/
+
+    node.append("image")
+        .attr("xlink:href", "http://img2.wikia.nocookie.net/__cb20120204043718/battlefordreamisland/images/c/c0/Bubble_Icon.png")
+        .attr("height", function(d) { return 2 * d.r; })
+        .attr("width", function(d) { return 2 * d.r; })
+        .attr("x", function(d) { return -1 * d.r; })
+        .attr("y", function(d) { return -1 * d.r; })
+        // .style("background-color", function(d) { return d.color; })
+    ;
 
     node.append("circle")
         .attr("r", function(d) { return d.r; })
         .style("fill", function(d) { return d.color; })
     ;
 
+
+
+
+
+
     // Uncomment the following to dispaly class names on bubbles
-    /*
+/*
     node.append("text")
         .attr("dy", ".3em")
         .style("text-anchor", "middle")
         .text(function(d) { return d.className; });
-    */
+*/
 }
 
 /**
@@ -79,7 +99,7 @@ function getBubbleColour(smells) {
     // 50% lightness is "normal colour"
     // http://www.w3.org/TR/css3-color/#hsl-examples
     var dirtLevel = getBubbleDirt(smells);
-    return "hsl(210, " + dirtLevel + "%, 50%)";
+    return "hsla(210, " + dirtLevel + "%, 50%, 0.5)";
 }
 
 function getBubbleDirt(smells) {
