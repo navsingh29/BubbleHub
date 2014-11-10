@@ -5,21 +5,64 @@
     xsi:schemaLocation="http://pmd.sourceforge.net/ruleset/2.0.0 http://pmd.sourceforge.net/ruleset_2_0_0.xsd">
 
   <description>
-  This ruleset checks my code for bad stuff
+  This ruleset will check code for following items:
+   - Correct Use of Braces
+   - Code Size
+   		- ExcessiveMethodLength
   </description>
 
-  <!-- We'll use the entire 'strings' ruleset -->
-
-  <!-- Here's some rules we'll specify one at a time -->
-  <rule ref="rulesets/java/unusedcode.xml/UnusedLocalVariable"/>
-  <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateField"/>
-
-
-  <!-- Now we'll customize a rule's property value -->
-  <rule ref="rulesets/java/codesize.xml/CyclomaticComplexity">
+  <!-- We'll use the entire 'braces' ruleset -->
+  <rule ref="rulesets/java/braces.xml">
+  
+  
+  <!-- Customizing brace ruleset rule's property values-->
+  <rule ref="rulesets/java/braces.xml/IfStmtsMustUseBraces">
     <properties>
-        <property name="reportLevel" value="5"/>
+        <property name="smellLevel" value="2"/>
+    </properties>
+  </rule>
+  
+  <rule ref="rulesets/java/braces.xml/WhileLoopsMustUseBraces">
+    <properties>
+        <property name="smellLevel" value="2"/>
+    </properties>
+  </rule>
+  
+  <rule ref="rulesets/java/braces.xml/IfElseStmtsMustUseBraces">
+    <properties>
+        <property name="smellLevel" value="2"/>
     </properties>
   </rule>
 
+  <rule ref="rulesets/java/braces.xml/ForLoopsMustUseBraces">
+    <properties>
+        <property name="smellLevel" value="2"/>
+    </properties>
+  </rule>
+  
+  <!-- Some rules from the CodeSize ruleset -->
+  <rule ref="rulesets/java/codesize.xml/ExcessiveMethodLength"/>
+  <rule ref="rulesets/java/codesize.xml/ExcessiveParameterList"/>
+  <rule ref="rulesets/java/codesize.xml/ExcessiveClassLength"/>
+
+
+  <!-- Customized Property Value for the Codesize rules -->
+  <rule ref="rulesets/java/codesize.xml/ExcessiveMethodLength">
+    <properties>
+        <property name="smellLevel" value="5"/>
+    </properties>
+  </rule>
+  
+  <rule ref="rulesets/java/codesize.xml/ExcessiveParameterList">
+    <properties>
+        <property name="smellLevel" value="5"/>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/codesize.xml/ExcessiveClassLength">
+    <properties>
+        <property name="smellLevel" value="5"/>
+    </properties>
+  </rule>
+  
 </ruleset>
