@@ -19,7 +19,7 @@ class CodeComplexityAnalyzer(object):
     VOID = "void"
     OBJECT = "Object"
 
-    MIN_VALUE = 20
+    MIN_VALUE = 0.2
 
     def __init__(self):
         self.return_scores = dict()
@@ -45,7 +45,9 @@ class CodeComplexityAnalyzer(object):
             score += len(java_class.name)/2
 
         return int(score)
-        #return int(self.normalize_complexity(score))
+        #normalized_score = 100 * self.normalize_complexity(score)
+        #print "Score %d, Normalized %d" %(score, normalized_score)
+        #return int(normalized_score)
 
     def calculate_method_complexity(self, java_method):
         """
@@ -81,16 +83,16 @@ class CodeComplexityAnalyzer(object):
         # if score was less than 1, then the normalized value would be greater
         # than 1
         if score < 1:
-            import ipdb; ipdb.set_trace() # BREAKPOINT
             return self.MIN_VALUE
+
         normalized_score = 1.0 - (1.0/score)
 
         # We want some kind of min value so bubbles have some shape even if
         # their complexity is 0
-        if normalized_score < 0:
+        if normalized_score < self.MIN_VALUE:
             return self.MIN_VALUE
 
-        return int(normalized_score)
+        return normalized_score
 
     def __return_type_score(self, t):
         """

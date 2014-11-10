@@ -63,7 +63,7 @@ for sha in shas:
             f_dict["smells"] = randint(0, 10) * 10
 
             complexity = code_complexity.calculate_complexity(java_class)
-            print "%s has: %d" % (f, complexity)
+            #print "%s has: %d" % (f, complexity)
             f_dict["complexity"] = complexity
             local_commit.append(f_dict)
         except:
