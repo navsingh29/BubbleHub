@@ -37,6 +37,9 @@ class CodeComplexityAnalyzer(object):
         score = 0
 
         # Do methods
+        if not java_class:
+            return 0
+
         for method in java_class.methods:
             score += self.calculate_method_complexity(method)
 
@@ -44,7 +47,7 @@ class CodeComplexityAnalyzer(object):
         if len(java_class.name) < 15:
             score += len(java_class.name)/2
 
-        return int(score)
+        return score
         #normalized_score = 100 * self.normalize_complexity(score)
         #print "Score %d, Normalized %d" %(score, normalized_score)
         #return int(normalized_score)
@@ -130,7 +133,6 @@ class JavaParser(m.Visitor):
         super(JavaParser, self).__init__()
         self.first_field = True
         self.first_method = True
-        self.java_classes = []
         self.file_name = file_name
         self.current_java_class = None
         self.current_method = None
@@ -140,7 +142,6 @@ class JavaParser(m.Visitor):
 
     def visit_ClassDeclaration(self, class_decl):
         self.current_java_class = JavaClass(str(class_decl.name))
-        self.java_classes.append(self.current_java_class)
 
         if class_decl.extends is not None:
             self.current_java_class.superclass = class_decl.extends.name.value
@@ -151,7 +152,6 @@ class JavaParser(m.Visitor):
 
     def visit_InterfaceDeclaration(self, interface_decl):
         self.current_java_class = JavaInterface(str(interface_decl.name))
-        self.java_classes.append(self.current_java_class)
 
         if interface_decl.extends is not None and type(interface_decl.extends) is str:
             self.current_java_class.add_extends(interface_decl.extends.name.value)
@@ -235,10 +235,19 @@ class JavaParser(m.Visitor):
     def parse(self, java_file):
         parser = plyj.parser.Parser()
         tree = parser.parse_file(file(java_file))
+
+        # HAcky way to deal with enums
+        # In the case of enums, this object doesn't hit the visit_Class or
+        # visit_Interface.. so it never creates a self.current_java_class_object,
+        # which is leading to a lot of errors
         if not tree:
-            return
+            return None
+
+        self.current_java_class = JavaClass(os.path.split(java_file)[-1].replace(".java", ""))
         tree.accept(self)
-        self.current_java_class.file_name = os.path.basename(java_file)
+
+        if self.current_java_class:
+            self.current_java_class.file_name = os.path.basename(java_file)
 
         return self.current_java_class
 

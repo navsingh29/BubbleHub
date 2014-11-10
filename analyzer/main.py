@@ -1,4 +1,4 @@
-from github_repo import get_merge_request_shas, is_dir_git_repo
+from github_repo import get_merge_request_shas, is_dir_git_repo, reduce_sha_count
 from util import *
 from code_smell import CodeSmellAnalyzer, CodeSmellFile, PMDCodeSmell
 from code_complexity import CodeComplexityAnalyzer, JavaParser
@@ -50,7 +50,11 @@ root_json_dict = dict()
 commits = []
 root_json_dict["commits"] = commits
 
-for sha in shas:
+#shas = ["master"]
+shas = reduce_sha_count(shas, 50)
+
+for i, sha in enumerate(shas):
+    print "Sha %d/%d" %(i, len(shas))
     checkout_sha(sha)
     files = get_all_files_of_type(project_dir, "java")
     local_commit = []
@@ -58,6 +62,10 @@ for sha in shas:
         try:
             java_parser = JavaParser()
             java_class = java_parser.parse(f)
+            if not java_class:
+                print f
+                # Wasn't able to parse for some reasonn...
+                break
             f_dict = dict()
             f_dict["fileName"] = strip_full_file_path(f, project_name)
             f_dict["smells"] = randint(0, 10) * 10
@@ -66,7 +74,7 @@ for sha in shas:
             #print "%s has: %d" % (f, complexity)
             f_dict["complexity"] = complexity
             local_commit.append(f_dict)
-        except:
+        except Exception as e:
             print "ERROR in %s" % f
 
     commits.append(local_commit)
