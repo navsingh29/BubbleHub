@@ -63,10 +63,17 @@
                 /* background-color: #1C6BA0; */
 
             }
-            #play{
+            #play, #replay{
                 position: absolute;
                 top: 0px;
                 left: 0px;
+                width: 35px;
+                height: 35px;
+            }
+            #replay{
+                position: absolute;
+                top: 0px;
+                left: 40px;
                 width: 35px;
                 height: 35px;
             }
@@ -83,6 +90,7 @@
         <div id="vis-outer">
             <div id="vis">
                 <button id="play" onclick="onPlay(this)">&#9612;&#9612;</button>
+                <button id="replay" onclick="onReplay(this)">O</button>
             </div>
         </div>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>

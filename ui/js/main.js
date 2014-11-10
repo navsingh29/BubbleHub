@@ -47,7 +47,7 @@ function beginAnimation(data) {
 }
 
 function runVisual(){
-    if(!isPlaying) {
+    if(!isPlaying || currentScene + 1 == allCommits.length) {
         animationScheduled = false;
         return;
     }
@@ -79,6 +79,16 @@ function onPlay(buttonElem){
         buttonElem.innerHTML = " &#9658; ";
     if(!animationScheduled) //make sure run visual isn't running twice
         runVisual();
+}
+
+function onReplay(buttonElem){
+    //alert('hi');
+
+    if(!animationScheduled) { //make sure run visual isn't running twice
+        isPlaying = true;
+        currentScene = 0;
+        runVisual();
+    }
 }
 
 
