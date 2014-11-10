@@ -36,6 +36,8 @@ function createVisual(data){
 
     node.append("image")
         .attr("xlink:href", "http://img2.wikia.nocookie.net/__cb20120204043718/battlefordreamisland/images/c/c0/Bubble_Icon.png")
+     //   .attr("xlink:href", "http://pixabay.com/static/uploads/photo/2013/07/13/10/43/blue-157652_640.png")
+
         .attr("height", function(d) { return 2 * d.r; })
         .attr("width", function(d) { return 2 * d.r; })
         .attr("x", function(d) { return -1 * d.r; })
