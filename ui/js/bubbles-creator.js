@@ -23,7 +23,7 @@ var svg = null;
 function createVisual(data){
     recreateSvg();
     var node = svg.selectAll(".node")
-        .data(bubble.nodes({children:data, fileName:"", color:"rgba(255,255,255,0.0)"}))
+        .data(bubble.nodes({children:data, fileName:"", color:"rgba(51,153,255,0.1)"}))
         .enter().append("g")
         .attr("class", "node")
         .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
@@ -35,8 +35,14 @@ function createVisual(data){
 */
 
     node.append("image")
-        .attr("xlink:href", "http://img2.wikia.nocookie.net/__cb20120204043718/battlefordreamisland/images/c/c0/Bubble_Icon.png")
-     //   .attr("xlink:href", "http://pixabay.com/static/uploads/photo/2013/07/13/10/43/blue-157652_640.png")
+        .attr("xlink:href", function(d) {
+            if(d.fileName == "")
+                return "img/bubble_outer.png";
+            //    return "";
+            else
+                return "img/bubble2.png";
+        })
+     //   .attr("xlink:href", "img/bubble2.png")
 
         .attr("height", function(d) { return 2 * d.r; })
         .attr("width", function(d) { return 2 * d.r; })
@@ -101,7 +107,7 @@ function getBubbleColour(smells) {
     // 50% lightness is "normal colour"
     // http://www.w3.org/TR/css3-color/#hsl-examples
     var dirtLevel = getBubbleDirt(smells);
-    return "hsla(210, " + dirtLevel + "%, 50%, 0.5)";
+    return "hsla(210, " + dirtLevel + "%, 50%, 0.7)";
 }
 
 function getBubbleDirt(smells) {
