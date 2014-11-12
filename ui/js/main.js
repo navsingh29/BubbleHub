@@ -3,9 +3,10 @@
  */
 
 var isPlaying = true;
-var allCommits;
+var allCommits = [];
 var currentScene = 0;
 var animationScheduled = false;
+var allCommitObjects = [];
 
 /**
  * Callback for JSON parser, begins the animation for the provided data
@@ -14,7 +15,6 @@ var animationScheduled = false;
  */
 function beginAnimation(data) {
     var numCommits = data.commits.length;
-    allCommits = [];
     // This loop is where all the commits will be analyzed and displayed in UI
     for(var i = 0; i < numCommits; i++) {
 
@@ -25,14 +25,15 @@ function beginAnimation(data) {
         // This list contains a list of Bubbles that will be created
         // (each bubble represents a file visual)
         var commitFileVisuals = [];
-
+        var commitFileObjects = {};
         // This loop populates the list of bubbles based on current commit
         for(var j = 0; j < numFiles; j++) {
             // Create the file visual object based on required visual (bubble in this case)
             var newFileVisualObject = createBubbleObject(currCommit[j]);
             commitFileVisuals.push(newFileVisualObject);
+            commitFileObjects[newFileVisualObject.fileName] = newFileVisualObject;
         }
-
+        allCommitObjects.push(commitFileObjects);
         allCommits.push(commitFileVisuals);
         /*
         function sleepy() {
@@ -51,7 +52,7 @@ function runVisual(){
         animationScheduled = false;
         return;
     }
-    createVisual(allCommits[currentScene]);
+    createVisual(allCommits[currentScene], allCommitObjects[currentScene - 1]);
     setTimeout(function() {
         currentScene++;
         animationScheduled = true;
