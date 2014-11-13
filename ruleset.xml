@@ -65,4 +65,96 @@
     </properties>
   </rule>
   
+  <!-- We'll use the entire 'Unused Code' ruleset -->
+  <rule ref="rulesets/java/unusedcode.xml">
+  
+  
+  <!-- Customizing UnusedCode ruleset rule's property values-->
+  <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateField">
+    <properties>
+        <property name="smellLevel" value="3"/>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/unusedcode.xml/UnusedLocalVariable">
+    <properties>
+        <property name="smellLevel" value="3"/>
+    </properties>
+  </rule> 
+
+  <rule ref="rulesets/java/unusedcode.xml/UnusedPrivateMethod">
+    <properties>
+        <property name="smellLevel" value="3"/>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/unusedcode.xml/UnusedFormalParameter">
+    <properties>
+        <property name="smellLevel" value="3"/>
+    </properties>
+  </rule>
+  
+  <!-- We'll use the entire 'Unused Code' ruleset -->
+  <rule ref="rulesets/java/empty.xml">  
+
+  <rule ref="rulesets/java/empty.xml/EmptyCatchBlock">
+    <properties>
+        <property name="smellLevel" value="4"/>
+    </properties>
+  </rule>
+  
+  <rule ref="rulesets/java/empty.xml/EmptyIfStmt">
+    <properties>
+        <property name="smellLevel" value="4"/>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/empty.xml/EmptyWhileStmt">
+    <properties>
+        <property name="smellLevel" value="4"/>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/empty.xml/EmptyTryBlock">
+    <properties>
+        <property name="smellLevel" value="4"/>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/empty.xml/EmptySwitchStmt">
+    <properties>
+        <property name="smellLevel" value="4"/>
+    </properties>
+  </rule>
+  
+  <!-- Some rules from the CodeSize ruleset -->
+  <rule ref="rulesets/java/import.xml/DuplicateImports"/>
+  <rule ref="rulesets/java/import.xml/UnusedImports"/>
+  <rule ref="rulesets/java/import.xml/ImportFromSamePackage"/>
+  <rule ref="rulesets/java/import.xml/DontImportJavaLang"/>
+  
+  <rule ref="rulesets/java/imports.xml/DuplicateImports">
+    <properties>
+        <property name="smellLevel" value="4"/>
+    </properties>
+  </rule>
+
+  <rule ref="rulesets/java/imports.xml/UnusedImports">
+    <properties>
+        <property name="smellLevel" value="4"/>
+    </properties>
+  </rule>
+  
+  <rule ref="rulesets/java/imports.xml/ImportFromSamePackage">
+    <properties>
+        <property name="smellLevel" value="4"/>
+    </properties>
+  </rule>
+  
+  <rule ref="rulesets/java/imports.xml/DontImportJavaLang">
+    <properties>
+        <property name="smellLevel" value="4"/>
+    </properties>
+  </rule>
+  
 </ruleset>
