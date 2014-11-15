@@ -32,6 +32,18 @@ class CodeSmellFile(object):
 
 class CodeSmellAnalyzer(object):
 
+    CS_DICT = {
+        "Avoid using if statements without curly braces" : 2,
+        "Avoid using if...else statements without curly braces" : 2,
+        "Avoid modifiers which are implied by the context": 2,
+        "Avoid empty catch blocks": 4,
+        "Avoid unused private methods such as 'throwImmutable()'.": 3,
+        "Avoid unused constructor parameters such as 'noInit'.": 3,
+        "Avoid unused local variables such as 'mutable_bitField0_'.": 3,
+        "Avoid really long classes.": 10,
+        "Avoid really long methods": 10,
+        }
+
     def __init__(self, pmd):
         self.__pmd = pmd
 
@@ -47,6 +59,7 @@ class CodeSmellAnalyzer(object):
         code_smells = dict()
         for pmd_result in pop:
             cs_type = self.__extract_code_smell_type(pmd_result)
+
             cs_file = self.__extract_file_name(pmd_result)
 
             if cs_file and cs_type:
