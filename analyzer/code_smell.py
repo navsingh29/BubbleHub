@@ -36,11 +36,14 @@ class CodeSmellAnalyzer(object):
         "Avoid using if statements without curly braces" : 5,
         "Avoid using if...else statements without curly braces" : 5,
         "Avoid modifiers which are implied by the context": 5,
-        "Avoid empty catch blocks": 10,
-        "Avoid long parameter lists.": 10,
+        "Avoid using for statements without curly braces": 5,
+        "Avoid using while statements without curly braces": 5,
         "Avoid empty if statements": 10,
-        "Avoid really long classes.": 20,
+        "Avoid empty while statements": 10,
+        "Avoid empty catch blocks": 12,
+        "Avoid long parameter lists.": 12,
         "Avoid really long methods.": 15,
+        "Avoid really long classes.": 20,
         }
 
     def __init__(self, pmd):

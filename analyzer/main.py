@@ -54,7 +54,6 @@ root_json_dict["commits"] = commits
 #shas = ["master"]
 #shas = reduce_sha_count(shas, 50)
 
-shas = shas[-100:]
 
 for i, sha in enumerate(shas):
     print "Sha %d/%d" %(i, len(shas))
