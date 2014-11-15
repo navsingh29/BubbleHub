@@ -33,15 +33,14 @@ class CodeSmellFile(object):
 class CodeSmellAnalyzer(object):
 
     CS_DICT = {
-        "Avoid using if statements without curly braces" : 2,
-        "Avoid using if...else statements without curly braces" : 2,
-        "Avoid modifiers which are implied by the context": 2,
-        "Avoid empty catch blocks": 4,
-        "Avoid unused private methods such as 'throwImmutable()'.": 3,
-        "Avoid unused constructor parameters such as 'noInit'.": 3,
-        "Avoid unused local variables such as 'mutable_bitField0_'.": 3,
-        "Avoid really long classes.": 10,
-        "Avoid really long methods": 10,
+        "Avoid using if statements without curly braces" : 5,
+        "Avoid using if...else statements without curly braces" : 5,
+        "Avoid modifiers which are implied by the context": 5,
+        "Avoid empty catch blocks": 10,
+        "Avoid long parameter lists.": 10,
+        "Avoid empty if statements": 10,
+        "Avoid really long classes.": 20,
+        "Avoid really long methods.": 15,
         }
 
     def __init__(self, pmd):
@@ -59,15 +58,35 @@ class CodeSmellAnalyzer(object):
         code_smells = dict()
         for pmd_result in pop:
             cs_type = self.__extract_code_smell_type(pmd_result)
-
             cs_file = self.__extract_file_name(pmd_result)
 
             if cs_file and cs_type:
                 if not code_smells.has_key(cs_file):
-                    code_smells[cs_file] = CodeSmellFile(cs_file)
-                code_smells.get(cs_file).add_type(cs_type)
+                    code_smells[cs_file] = 100
 
-        return list(code_smells.itervalues())
+                code_smells[cs_file] -= self.__get_code_smell_value(cs_type)
+
+        return code_smells
+
+    def __get_code_smell_value(self, cs_type):
+        if self.CS_DICT.has_key(cs_type):
+            return self.CS_DICT.get(cs_type)
+
+        if "Avoid unused private fields such as" in cs_type:
+            return 10
+        if "Avoid unused private methods such as" in cs_type:
+            return 10
+        if "Avoid unused constructor parameters such as" in cs_type:
+            return 10
+        if "Avoid unused method parameters such as" in cs_type:
+            return 10
+        if "Avoid unused local variables such as" in cs_type:
+            return 10
+
+        with open("not_record_cs_types.txt", "a") as f:
+            print "Could not find %s" % cs_type
+            f.write("%s" % cs_type)
+        return 0
 
     def __extract_file_name(self, pmd_result):
         """

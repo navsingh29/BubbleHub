@@ -58,9 +58,8 @@ class CodeSmellAnalyzerMockUnitTests(unittest.TestCase):
         self.pmd.call_pmd = mock.Mock(return_value=mock_result)
         self.code_smeller = code_smell.CodeSmellAnalyzer(self.pmd)
 
-        c_smells = self.code_smeller.get_code_smells(self.PMD_DIR, self.PROJECT_DIR)[0]
-        self.assertEqual("/Dir/Name/File.java", c_smells.file_name)
-        self.assertEqual("Code Smell Problem", c_smells.types[0])
+        c_smells = self.code_smeller.get_code_smells(self.PMD_DIR, self.PROJECT_DIR)
+        self.assertIn("/Dir/Name/File.java", list(c_smells.iterkeys()))
 
     def test_does_not_retrieve_non_java_files(self):
         mock_result = ["/Dir/Not/Java.something.py\tCodeSmell"]

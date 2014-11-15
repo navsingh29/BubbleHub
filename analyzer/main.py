@@ -20,6 +20,7 @@ args = parser.parse_args()
 cur_dir = os.getcwd()
 project_dir = args.project
 pmd_dir = config.config["pmd_dir"]
+json_file = config.config["input_json"]
 
 # Check to see if valid directories
 if not os.path.isdir(project_dir):
@@ -53,11 +54,15 @@ root_json_dict["commits"] = commits
 #shas = ["master"]
 #shas = reduce_sha_count(shas, 50)
 
-shas = shas[-50:]
+shas = shas[-100:]
+
 for i, sha in enumerate(shas):
     print "Sha %d/%d" %(i, len(shas))
     checkout_sha(sha)
     files = get_all_files_of_type(project_dir, "java")
+
+    code_smells_dict = code_smell_analyzer.get_code_smells(pmd_dir, project_dir)
+
     local_commit = []
     for f in files:
         try:
@@ -69,7 +74,10 @@ for i, sha in enumerate(shas):
                 break
             f_dict = dict()
             f_dict["fileName"] = strip_full_file_path(f, project_name)
-            f_dict["smells"] = randint(0, 10) * 10
+            cs_val = code_smells_dict.get(f)
+            if not cs_val or cs_val < 0:
+                cs_val = 0
+            f_dict["smells"] = cs_val
 
             complexity = code_complexity.calculate_complexity(java_class)
             #print "%s has: %d" % (f, complexity)
@@ -80,6 +88,6 @@ for i, sha in enumerate(shas):
 
     commits.append(local_commit)
 
-json_file = os.path.join(cur_dir, "..", "ui", "sample.json")
+json_file = os.path.join(cur_dir, "..", "ui", json_file)
 with open(json_file, "w") as f:
     f.write(json.dumps(root_json_dict, indent=4))

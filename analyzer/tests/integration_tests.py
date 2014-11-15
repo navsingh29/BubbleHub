@@ -61,7 +61,7 @@ class CodeSmellAnalyzerIntegrationTests(unittest.TestCase):
 
     def test_code_smell_files(self):
         code_smells = self.code_smeller.get_code_smells(self.pmd_dir, self.test_proj_dir)
-        code_smell_files = [cs.file_name for cs in code_smells]
+        code_smell_files = list(code_smells.iterkeys())
 
         # Make sure that the code smell files contains at the correct files
         test_count = 2
@@ -72,19 +72,6 @@ class CodeSmellAnalyzerIntegrationTests(unittest.TestCase):
                 test_count -= 1
 
         self.assertEqual(0, test_count)
-
-    def test_code_smell_types(self):
-        code_smells = self.code_smeller.get_code_smells(self.pmd_dir, self.test_proj_dir)
-        cs_types = []
-        for cs in code_smells:
-            cs_types += cs.types
-
-        self.assertIn(
-            "Avoid modifiers which are implied by the context",
-            cs_types)
-        self.assertIn(
-            "Avoid empty catch blocks",
-            cs_types)
 
 #    def test_cs_get_num_types(self):
 #        code_smells = self.code_smeller.get_code_smells(self.pmd_dir, self.test_proj_dir)
