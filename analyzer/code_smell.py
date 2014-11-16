@@ -33,15 +33,16 @@ class CodeSmellFile(object):
 class CodeSmellAnalyzer(object):
 
     CS_DICT = {
-        "Avoid using if statements without curly braces" : 2,
-        "Avoid using if...else statements without curly braces" : 2,
-        "Avoid modifiers which are implied by the context": 2,
-        "Avoid using for statements without curly braces": 2,
-        "Avoid using while statements without curly braces": 2,
-        "Avoid empty if statements": 5,
-        "Avoid empty while statements": 5,
-        "Avoid empty catch blocks": 5,
-        "Avoid long parameter lists.": 6,
+        "Avoid using if statements without curly braces" : 3,
+        "Avoid using if...else statements without curly braces" : 3,
+        "Avoid using for statements without curly braces": 3,
+        "Avoid using while statements without curly braces": 5,
+        "Avoid modifiers which are implied by the context": 5,
+        "Avoid empty if statements": 7,
+        "Avoid empty while statements": 7,
+        "Avoid empty catch blocks": 7,
+        "An empty statement (semicolon) not part of a loop": 7,
+        "Avoid long parameter lists.": 7,
         "Avoid really long methods.": 10,
         "Avoid really long classes.": 15,
         }

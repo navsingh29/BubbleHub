@@ -63,31 +63,31 @@ for i, sha in enumerate(shas):
     code_smells_dict = code_smell_analyzer.get_code_smells(pmd_dir, project_dir)
 
     local_commit = []
+    print "Parsing %d files" % len(files)
+    count = 0
     for f in files:
         try:
             java_parser = JavaParser()
             java_class = java_parser.parse(f)
-            if not java_class:
-                print f
-                # Wasn't able to parse for some reasonn...
-                break
-            f_dict = dict()
-            f_dict["fileName"] = strip_full_file_path(f, project_name)
-            cs_val = code_smells_dict.get(f)
-            if not cs_val:
-                cs_val = 100
-            if cs_val <= 0:
-                cs_val = 0
 
-            f_dict["smells"] = cs_val
+            if java_class:
+                f_dict = dict()
+                f_dict["fileName"] = strip_full_file_path(f, project_name)
+                cs_val = code_smells_dict.get(f)
+                if not cs_val:
+                    cs_val = 100
+                if cs_val <= 0:
+                    cs_val = 0
 
-            complexity = code_complexity.calculate_complexity(java_class)
-            #print "%s has: %d" % (f, complexity)
-            f_dict["complexity"] = complexity
-            local_commit.append(f_dict)
+                f_dict["smells"] = cs_val
+
+                complexity = code_complexity.calculate_complexity(java_class)
+                f_dict["complexity"] = complexity
+                local_commit.append(f_dict)
+                count += 1
         except Exception as e:
             print "ERROR in %s" % f
-
+    print "Parsed %d files" % count
     commits.append(local_commit)
 
 json_file = os.path.join(cur_dir, "..", "ui", json_file)
