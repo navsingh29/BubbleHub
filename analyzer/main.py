@@ -74,8 +74,11 @@ for i, sha in enumerate(shas):
             f_dict = dict()
             f_dict["fileName"] = strip_full_file_path(f, project_name)
             cs_val = code_smells_dict.get(f)
-            if not cs_val or cs_val < 0:
+            if not cs_val:
+                cs_val = 100
+            if cs_val <= 0:
                 cs_val = 0
+
             f_dict["smells"] = cs_val
 
             complexity = code_complexity.calculate_complexity(java_class)

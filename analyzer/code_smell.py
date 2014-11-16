@@ -33,17 +33,17 @@ class CodeSmellFile(object):
 class CodeSmellAnalyzer(object):
 
     CS_DICT = {
-        "Avoid using if statements without curly braces" : 5,
-        "Avoid using if...else statements without curly braces" : 5,
-        "Avoid modifiers which are implied by the context": 5,
-        "Avoid using for statements without curly braces": 5,
-        "Avoid using while statements without curly braces": 5,
-        "Avoid empty if statements": 10,
-        "Avoid empty while statements": 10,
-        "Avoid empty catch blocks": 12,
-        "Avoid long parameter lists.": 12,
-        "Avoid really long methods.": 15,
-        "Avoid really long classes.": 20,
+        "Avoid using if statements without curly braces" : 2,
+        "Avoid using if...else statements without curly braces" : 2,
+        "Avoid modifiers which are implied by the context": 2,
+        "Avoid using for statements without curly braces": 2,
+        "Avoid using while statements without curly braces": 2,
+        "Avoid empty if statements": 5,
+        "Avoid empty while statements": 5,
+        "Avoid empty catch blocks": 5,
+        "Avoid long parameter lists.": 6,
+        "Avoid really long methods.": 10,
+        "Avoid really long classes.": 15,
         }
 
     def __init__(self, pmd):
@@ -76,15 +76,15 @@ class CodeSmellAnalyzer(object):
             return self.CS_DICT.get(cs_type)
 
         if "Avoid unused private fields such as" in cs_type:
-            return 10
+            return 5
         if "Avoid unused private methods such as" in cs_type:
-            return 10
+            return 5
         if "Avoid unused constructor parameters such as" in cs_type:
-            return 10
+            return 5
         if "Avoid unused method parameters such as" in cs_type:
-            return 10
+            return 5
         if "Avoid unused local variables such as" in cs_type:
-            return 10
+            return 5
 
         with open("not_record_cs_types.txt", "a") as f:
             print "Could not find %s" % cs_type
