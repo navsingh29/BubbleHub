@@ -56,7 +56,7 @@ function runVisual(){
         currentScene++;
         animationScheduled = true;
         runVisual();
-    }, 1000);
+    }, 100);
 }
 
 function getDataUsingD3(){
