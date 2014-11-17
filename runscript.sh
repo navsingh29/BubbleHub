@@ -26,9 +26,20 @@ function main() {
    python main.py --project "$tmp/$projectname" 
 
    cd $base 
-   open -a safari ui/index.html
+   launchui
    cleanup $tmp
    exit 0
+}
+
+function launchui() {
+   if [[ "$OSTYPE" == "linux"* ]]; then
+      firefox ui/index.html
+   elif [[ "$OSTYPE" == "darwin"* ]]; then
+      open -a safari ui/index.html
+   else
+      echo "unsupported OS detected: please run on linux or mac, exiting..."
+      exit 1
+   fi
 }
 
 function cleanup() {
@@ -43,3 +54,4 @@ if [ "$#" -ne 1 ]; then
 else
    main $1 
 fi
+
