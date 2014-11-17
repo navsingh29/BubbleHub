@@ -1,6 +1,3 @@
-/**
- * Created by gurkaran on 2014-10-17.
- */
 
 var isPlaying = true;
 var allCommits;
@@ -34,13 +31,6 @@ function beginAnimation(data) {
         }
 
         allCommits.push(commitFileVisuals);
-        /*
-        function sleepy() {
-            var c = commitFileVisuals; // Use a closure to hold onto this value
-            setTimeout(function() { createVisual(c); }, i * 1000);
-        }
-        sleepy();
-        */
     }
     runVisual();
 
@@ -56,9 +46,12 @@ function runVisual(){
         currentScene++;
         animationScheduled = true;
         runVisual();
-    }, 100);
+    }, 1000); // Time elapse between consecutive frames in milliseconds
 }
 
+/**
+ * Load the data from the JSON file.
+ */
 function getDataUsingD3(){
     var configFile = "config.json";
     d3.json(configFile, function(error, root) {
@@ -70,7 +63,9 @@ function getDataUsingD3(){
         }
     );
 }
-
+/**
+ * Callback for clicking the play button.
+ */
 function onPlay(buttonElem){
     isPlaying = !isPlaying;
     if(isPlaying)

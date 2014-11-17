@@ -16,6 +16,7 @@ var bubble = d3.layout.pack()
     .padding(1.5);
 
 var svg = null;
+var oldData = [];
 
 /**
  * Given an array of bubble objects, displays them on the SVG
@@ -26,40 +27,84 @@ function createVisual(data){
         .data(bubble.nodes({children:data, fileName:"", color:"rgba(51,153,255,0.1)"}))
         .enter().append("g")
         .attr("class", "node")
-        .attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; });
-/*
-    node.append("circle")
-        .attr("r", function(d) { return d.r; })
-        .style("fill", function(d) { return d.color; })
-    ;
-*/
+        .attr("transform", function(d) {
+            if(d.fileName==""){
+                return "translate(" + d.x + "," + d.y + ")";
+            }
+
+            for(var i = 0; i<oldData.length; i++){
+                    if(oldData[i].fileName==d.fileName) {
+                        function translate(){
+                            return "translate(" + oldData[i].x + "," + oldData[i].y + ")";
+                        }
+                        return translate();
+                    }
+            }
+            return "translate(" + d.x + "," + d.y + ")";
+        });
+
+
+    function parseRadius(d){
+        if(d.fileName==""){
+            return d.r;
+        }
+        for(var i = 0; i<oldData.length; i++){
+            if(oldData[i].fileName==d.fileName) {
+                function radius(){
+                    return oldData[i].r;
+                }
+                return radius();
+            }
+        }
+        return 0;
+    }
 
     node.append("image")
         .attr("xlink:href", function(d) {
             if(d.fileName == "")
                 return "img/bubble_outer.png";
-            //    return "";
             else
                 return "img/bubble2.png";
         })
-     //   .attr("xlink:href", "img/bubble2.png")
 
+        .attr("height", function(d) { return 2 * parseRadius(d); })
+        .attr("width", function(d) { return 2 * parseRadius(d); })
+        .attr("x", function(d) { return -1 * parseRadius(d); })
+        .attr("y", function(d) { return -1 * parseRadius(d); })
+
+    ;
+
+    node.append("circle")
+        .attr("r", function(d) {
+            return parseRadius(d);
+        })
+        .style("fill", function(d) { return d.color; })
+    ;
+
+    svg.selectAll("circle")
+        .transition()
+        .duration(1000)
+        .attr("r", function(d) {
+            return d.r;
+        });
+
+    svg.selectAll(".node")
+        .transition()
+        .duration(1000)
+        .attr("transform", function(d) {
+            return "translate(" + d.x + "," + d.y + ")";
+        })
+    ;
+    svg.selectAll("image")
+        .transition()
+        .duration(1000)
         .attr("height", function(d) { return 2 * d.r; })
         .attr("width", function(d) { return 2 * d.r; })
         .attr("x", function(d) { return -1 * d.r; })
         .attr("y", function(d) { return -1 * d.r; })
-        // .style("background-color", function(d) { return d.color; })
     ;
-
-    node.append("circle")
-        .attr("r", function(d) { return d.r; })
-        .style("fill", function(d) { return d.color; })
-    ;
-
-
-
-
-
+    
+    oldData = data;
 
     // Uncomment the following to dispaly class names on bubbles
 /*
