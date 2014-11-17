@@ -23,8 +23,7 @@ function main() {
 
    # run analyzers
    cd "$base/analyzer"
-   # TODO: test this:
-   # python main.py --project "$tmp/$projectname" 
+   python main.py --project "$tmp/$projectname" 
 
    cd $base 
    open -a safari ui/index.html
