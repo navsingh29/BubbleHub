@@ -13,6 +13,8 @@ The project uses two Java code analysis tools, both are required:
 * PLYJ @ https://github.com/musiKk/plyj
 * PMD @ http://pmd.sourceforge.net/
 
+The project also requires the latest version of the Safari browser to see the visualizations.
+
 To visualize the results, we use D3.js @ http://d3js.org/.
 
 Current stages of development:
@@ -31,6 +33,8 @@ Make sure the virtualenvironment is activated with the analyzer/requirements.txt
 
 After those are setup, just run the main script.
 
+To run the visualization, simply open the /Bubblehub/ui/index.html file in the Safari browser
+
 To run tests for the analyzer
 ==============
 Change dir to /BubbleHub/Analyzer.
@@ -41,4 +45,6 @@ Change dir to /BubbleHub/Analyzer.
   
   OK
 
-
+To run tests for the analyzer
+==============
+Open /BubbleHub/ui/tests/tests.html in the Safari browser
