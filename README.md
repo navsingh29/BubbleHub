@@ -45,6 +45,6 @@ Change dir to /BubbleHub/Analyzer.
   
   OK
 
-To run tests for the analyzer
+To run tests for the visualizor
 ==============
 Open /BubbleHub/ui/tests/tests.html in the Safari browser
