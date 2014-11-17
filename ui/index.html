@@ -23,126 +23,7 @@
         <link rel="shortcut icon" href="img/favicon.ico">
         <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <style>
-            html {
-                width: 100%;
-                height:100%;
-
-            }
-            body {
-                width: 100%;
-                height:100%;
-
-                text-align: center;
-            }
-            html, body, h2, h3 {
-                border-width: 0px;
-                margin: 0px;
-                padding: 0px;
-            }
-            header {
-                width: 80%;
-                height:12%;
-            }
-            h2, h3 {
-                position: relative;
-                top: 33%;
-                transform: translateY(-33%);
-            }
-            #vis-outer  {
-                height:80%;
-               // border: 2px red solid;
-           /*     background-image: url('http://upload.wikimedia.org/wikipedia/commons/0/0f/Aquarium_in_HK_Ocean_Park.jpg'); */
-          /*      background-image: url('http://awesomeocean.com/wp-content/uploads/2014/10/life_under_the_ocean-wide.jpg'); */
-                background-image: url('img/ocean_repeat.jpg');
-                overflow: hidden;
-                //background-size: 100% 100%;
-                background-repeat: repeat;
-
-            }
-            header, #vis-outer, #control {
-                margin-left: auto;
-                margin-right: auto;
-                width: 100%;
-                position: relative;
-            }
-            #vis {
-                height: 100%;
-                width: 100%;
-                background-color: rgba(28,107,160,0.5);
-            }
-            .bubble{
-                /* background-color: #1C6BA0; */
-
-            }
-            #play, #replay{
-                position: absolute;
-                top: 0px;
-                left: 0px;
-                width: 35px;
-                height: 35px;
-            }
-            #replay{
-                position: absolute;
-                top: 0px;
-                left: 40px;
-                width: 35px;
-                height: 35px;
-            }
-            #speed-outer{
-                width: 90px;
-                height: 26px;
-                float: right;
-                top: 50%;
-
-                position: relative;
-            }
-            #speed-bar{
-                width: 50px;
-                height: 15px;
-                position: relative;
-                float: left;
-            }
-            #slider{
-                width: CALC(100% - 150px);
-                height: 25px;
-                float: right;
-
-            }
-            #play{
-                width: 35px;
-                height: 26px;
-            }
-            #control{
-                height: 100%;
-                position: relative;
-                top: 100%;
-                transform: translateY(-50%);
-            }
-            #control-wrapper{
-                height:2%;
-            }
-            #footer{
-                position: fixed;
-                bottom: 0px;
-                width: 100%;
-                height: 10%;
-                z-index: -1;
-                background-color: #366097;
-            }
-            .ui-slider-handle.ui-state-default{
-                height: 32px;
-            }
-            #speed-bar .ui-slider-handle.ui-state-default{
-                height: 24px;
-                width: 10px;
-            }
-            #speed-val{
-                position: relative;
-
-            }
-
-        </style>
+        <link rel="stylesheet" href="styles.css" />
     </head>
     <body>
         <header>
@@ -157,19 +38,19 @@
                <!-- <button id="replay" onclick="onReplay(this)">O</button> -->
             </div>
         </div>
-        <div id="control-wrapper">
-            <div id="control">
-                <button id="play"></button>
 
-                <div id="slider"></div>
-                <div id="speed-outer">
-                    <div id="speed-bar"></div>
-                    <div id="speed-val">1x</div>
+        <div id="footer">
+            <div id="control-wrapper">
+                <div id="control">
+                    <button id="play"></button>
+
+                    <div id="slider"></div>
+                    <div id="speed-outer">
+                        <div id="speed-bar"></div>
+                        <div id="speed-val">1x</div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div id="footer">
-
 
         </div>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
