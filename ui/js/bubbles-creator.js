@@ -91,21 +91,21 @@ function createVisual(data){
 
     svg.selectAll("circle")
         .transition()
-        .duration(1000)
+        .duration(speed)
         .attr("r", function(d) {
             return getRadius(d);
         });
 
     svg.selectAll(".node")
         .transition()
-        .duration(1000)
+        .duration(speed)
         .attr("transform", function(d) {
             return "translate(" + d.x + "," + d.y + ")";
         })
     ;
     svg.selectAll("image")
         .transition()
-        .duration(1000)
+        .duration(speed)
         .attr("height", function(d) { return 2 * getRadius(d); })
         .attr("width", function(d) { return 2 * getRadius(d); })
         .attr("x", function(d) { return -1 * getRadius(d); })

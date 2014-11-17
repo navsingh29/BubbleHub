@@ -3,6 +3,7 @@ var isPlaying = true;
 var allCommits;
 var currentScene = 0;
 var animationScheduled = false;
+var speed = 1000;
 
 /**
  * Callback for JSON parser, begins the animation for the provided data
@@ -49,7 +50,7 @@ function runVisual(){
         currentScene++;
         animationScheduled = true;
         runVisual();
-    }, 1000); // Time elapse between consecutive frames in milliseconds
+    }, speed); // Time elapse between consecutive frames in milliseconds
 }
 
 function updateSlider(){
@@ -122,6 +123,25 @@ function initSlider(){
                 if(!animationScheduled) //make sure run visual isn't running twice
                     runVisual();
             });
+
+    $( "#speed-bar" ).slider(
+        {
+            min: 1,
+            max: 8,
+            value: 4,
+            step: 1,
+            animate: false,
+            slide: onSpeedChanged
+        });
+
+}
+
+function onSpeedChanged(event, ui){
+    var normal = 4;
+    var val = ui.value;
+    var times = ui.value/normal;
+    speed = 1000 / times;
+    $("#speed-val").text(times + "x");
 
 }
 
