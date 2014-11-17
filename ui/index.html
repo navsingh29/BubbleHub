@@ -7,10 +7,16 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
-        <!--  jQuery  -->
+        <!--  jQuery
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
         <link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/themes/smoothness/jquery-ui.css" />
         <script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.11.2/jquery-ui.min.js"></script>
+         jQuery -->
+
+        <!--  jQuery -->
+        <script src="jquery/jquery.min.js"></script>
+        <link rel="stylesheet" href="jquery/jquery-ui.css" />
+        <script src="jquery/jquery-ui.min.js"></script>
         <!--  jQuery -->
 
         <title>BubbleHub</title>
@@ -54,7 +60,7 @@
                 background-repeat: repeat;
 
             }
-            header, #vis-outer, #slider {
+            header, #vis-outer, #control {
                 margin-left: auto;
                 margin-right: auto;
                 width: 100%;
@@ -84,7 +90,24 @@
                 height: 35px;
             }
             #slider{
-                height: 10px;
+                width: CALC(100% - 36px);
+                height: 25px;
+
+                float: right;
+            }
+            #play{
+
+
+                width: 35px;
+                height: 25px;
+            }
+            .ui-slider{
+                color: aqua;
+            }
+            .ui-slider-handle.ui-state-default{
+                height: 100%;
+                color: brown;
+                background-color: blue;
             }
 
         </style>
@@ -99,13 +122,12 @@
         <![endif]-->
         <div id="vis-outer">
             <div id="vis">
-                <button id="play" onclick="onPlay(this)">&#9612;&#9612;</button>
-                <button id="replay" onclick="onReplay(this)">O</button>
+               <!-- <button id="replay" onclick="onReplay(this)">O</button> -->
             </div>
         </div>
-        <div id="slider">
-
-
+        <div id="control">
+            <button id="play" onclick="onPlay(this)">&#9612;&#9612;</button>
+            <div id="slider"></div>
         </div>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="js/bubbles-creator.js" charset="utf-8"></script>

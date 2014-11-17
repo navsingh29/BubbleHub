@@ -42,13 +42,17 @@ function runVisual(){
         animationScheduled = false;
         return;
     }
-    $("#slider").slider('option', 'value', currentScene);
+    updateSlider();
     createVisual(allCommits[currentScene]);
     setTimeout(function() {
         currentScene++;
         animationScheduled = true;
         runVisual();
     }, 1000); // Time elapse between consecutive frames in milliseconds
+}
+
+function updateSlider(){
+    $("#slider").slider('option', 'value', currentScene);
 }
 
 /**

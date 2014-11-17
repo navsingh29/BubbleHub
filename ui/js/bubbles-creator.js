@@ -3,6 +3,7 @@
  */
 
 var OUTER_BUBBLE_INC = 30;
+var INNER_BUBBLES_INC = 0;
 // Diameter of the outermost circle in the visual
 var width = document.getElementById('vis').clientWidth;//960;
 var height = document.getElementById('vis').clientHeight;
@@ -46,12 +47,12 @@ function createVisual(data){
 
     function parseRadius(d){
         if(d.fileName==""){
-            return d.r + OUTER_BUBBLE_INC;
+            return getRadius(d);
         }
         for(var i = 0; i<oldData.length; i++){
             if(oldData[i].fileName==d.fileName) {
                 function radius(){
-                    return oldData[i].r;
+                    return getRadius(oldData[i]);
                 }
                 return radius();
             }
@@ -63,7 +64,7 @@ function createVisual(data){
         if(d.fileName=="")
             return d.r + OUTER_BUBBLE_INC;
         else
-            return d.r;
+            return d.r + INNER_BUBBLES_INC;
     }
 
     node.append("image")
