@@ -31,8 +31,9 @@ function beginAnimation(data) {
         }
 
         allCommits.push(commitFileVisuals);
-        initSlider();
+
     }
+    initSlider();
     runVisual();
 
 }
@@ -42,13 +43,17 @@ function runVisual(){
         animationScheduled = false;
         return;
     }
-    $("#slider").slider('option', 'value', currentScene);
+    updateSlider();
     createVisual(allCommits[currentScene]);
     setTimeout(function() {
         currentScene++;
         animationScheduled = true;
         runVisual();
     }, 1000); // Time elapse between consecutive frames in milliseconds
+}
+
+function updateSlider(){
+    $("#slider").slider('option', 'value', currentScene);
 }
 
 /**
@@ -65,18 +70,7 @@ function getDataUsingD3(){
         }
     );
 }
-/**
- * Callback for clicking the play button.
- */
-function onPlay(buttonElem){
-    isPlaying = !isPlaying;
-    if(isPlaying)
-        buttonElem.innerHTML = "&#9612;&#9612;";
-    else
-        buttonElem.innerHTML = " &#9658; ";
-    if(!animationScheduled) //make sure run visual isn't running twice
-        runVisual();
-}
+
 
 function onReplay(buttonElem){
     //alert('hi');
@@ -98,6 +92,37 @@ function initSlider(){
             slide: onSliderChanged
 
         });
+
+        $( "#play" ).button({
+            text: false,
+            icons: {
+                primary: "ui-icon-pause"
+            }
+        })
+            .click(function() {
+                var options;
+                if ( $( this ).text() === "play" ) {
+                    options = {
+                        label: "pause",
+                        icons: {
+                            primary: "ui-icon-pause"
+                        }
+                    };
+                } else {
+                    options = {
+                        label: "play",
+                        icons: {
+                            primary: "ui-icon-play"
+                        }
+                    };
+                }
+                $( this ).button( "option", options );
+                //alert('test');
+                isPlaying = !isPlaying;
+                if(!animationScheduled) //make sure run visual isn't running twice
+                    runVisual();
+            });
+
 }
 
 function onSliderChanged(event, ui){
