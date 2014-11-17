@@ -42,7 +42,7 @@
             }
             header {
                 width: 80%;
-                height:15%;
+                height:12%;
             }
             h2, h3 {
                 position: relative;
@@ -90,24 +90,26 @@
                 height: 35px;
             }
             #slider{
-                width: CALC(100% - 36px);
+                width: CALC(100% - 37px);
                 height: 25px;
 
                 float: right;
             }
             #play{
-
-
                 width: 35px;
-                height: 25px;
+                height: 26px;
             }
-            .ui-slider{
-                color: aqua;
+            #control{
+                height: 100%;
+                position: relative;
+                top: 100%;
+                transform: translateY(-50%);
+            }
+            #control-wrapper{
+                height:2%;
             }
             .ui-slider-handle.ui-state-default{
-                height: 100%;
-                color: brown;
-                background-color: blue;
+                height: 32px;
             }
 
         </style>
@@ -125,9 +127,11 @@
                <!-- <button id="replay" onclick="onReplay(this)">O</button> -->
             </div>
         </div>
-        <div id="control">
-            <button id="play" onclick="onPlay(this)">&#9612;&#9612;</button>
-            <div id="slider"></div>
+        <div id="control-wrapper">
+            <div id="control">
+                <button id="play"></button>
+                <div id="slider"></div>
+            </div>
         </div>
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="js/bubbles-creator.js" charset="utf-8"></script>

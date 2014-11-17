@@ -31,9 +31,12 @@ You will then need to point BubbleHub to these two libraries. You can do this by
 
 Make sure the virtualenvironment is activated with the analyzer/requirements.txt.
 
-After those are setup, just run the main script.
+To run the visualization and UI, one of the following two options are available:
+* Updated Safari browser on Mac
+* Updated Firefox browser on most forms of Linux
 
-To run the visualization, simply open the /Bubblehub/ui/index.html file in the Safari browser
+Finally, to run the script once all the above prerequisites are met, simply call the runscript in /BubbleHub:
+./runscript.sh [repository url]
 
 To run tests for the analyzer
 ==============
@@ -47,4 +50,4 @@ Change dir to /BubbleHub/Analyzer.
 
 To run tests for the visualizor
 ==============
-Open /BubbleHub/ui/tests/tests.html in the Safari browser
+Open /BubbleHub/ui/tests/tests.html in the Safari or Firefox browser
