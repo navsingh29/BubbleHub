@@ -2,7 +2,6 @@
     "output_json" : "output.json",
 
     "pmd_dir" : "/Users/Ben/Projects/BubbleHub/analyzer/pmd",
-    "plyj_dir" : "/Users/Ben/Projects/BubbleHub/analyzer/plyj",
 
     "input_json" : "realm.json",
 
