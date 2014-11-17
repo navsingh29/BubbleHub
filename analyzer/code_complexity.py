@@ -1,8 +1,13 @@
 from __future__ import division
 # So we can import the nested plyj project
+import os
 import sys
 import config
-sys.path.insert(0, config.config["plyj_dir"])
+
+# Import the plyj
+root_dir = os.path.dirname(os.path.abspath(__file__))
+plyj_dir = os.path.join(root_dir, "plyj")
+sys.path.insert(0, plyj_dir)
 
 from models import JavaClass, JavaVariableBinding, JavaMethod, JavaInterface
 import os

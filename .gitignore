@@ -1,8 +1,7 @@
 analyzer/venv/
 *.pyc
 analyzer/parser.out
-analyzer/lextab.py
-analyzer/parsetab.py
+venv/
 
 pmd/
 .DS_STORE
