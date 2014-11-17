@@ -2,7 +2,7 @@
  *  JS file that deals with display logic
  */
 
-
+var OUTER_BUBBLE_INC = 30;
 // Diameter of the outermost circle in the visual
 var width = document.getElementById('vis').clientWidth;//960;
 var height = document.getElementById('vis').clientHeight;
@@ -11,7 +11,7 @@ function comparator(a, b) {return b.fileName.localeCompare(a.fileName);}
 //Using d3.layout.pack to display the bubbles
 var bubble = d3.layout.pack()
     .sort(comparator)
-    .size([width, height])
+    .size([width-10, height-10])
     .value(function(d) {return d.complexity;})
     .padding(1.5);
 
@@ -46,7 +46,7 @@ function createVisual(data){
 
     function parseRadius(d){
         if(d.fileName==""){
-            return d.r;
+            return d.r + OUTER_BUBBLE_INC;
         }
         for(var i = 0; i<oldData.length; i++){
             if(oldData[i].fileName==d.fileName) {
@@ -57,6 +57,13 @@ function createVisual(data){
             }
         }
         return 0;
+    }
+
+    function getRadius(d){
+        if(d.fileName=="")
+            return d.r + OUTER_BUBBLE_INC;
+        else
+            return d.r;
     }
 
     node.append("image")
@@ -85,7 +92,7 @@ function createVisual(data){
         .transition()
         .duration(1000)
         .attr("r", function(d) {
-            return d.r;
+            return getRadius(d);
         });
 
     svg.selectAll(".node")
@@ -98,12 +105,12 @@ function createVisual(data){
     svg.selectAll("image")
         .transition()
         .duration(1000)
-        .attr("height", function(d) { return 2 * d.r; })
-        .attr("width", function(d) { return 2 * d.r; })
-        .attr("x", function(d) { return -1 * d.r; })
-        .attr("y", function(d) { return -1 * d.r; })
+        .attr("height", function(d) { return 2 * getRadius(d); })
+        .attr("width", function(d) { return 2 * getRadius(d); })
+        .attr("x", function(d) { return -1 * getRadius(d); })
+        .attr("y", function(d) { return -1 * getRadius(d); })
     ;
-    
+
     oldData = data;
 
     // Uncomment the following to dispaly class names on bubbles

@@ -31,6 +31,7 @@ function beginAnimation(data) {
         }
 
         allCommits.push(commitFileVisuals);
+        initSlider();
     }
     runVisual();
 
@@ -41,6 +42,7 @@ function runVisual(){
         animationScheduled = false;
         return;
     }
+    $("#slider").slider('option', 'value', currentScene);
     createVisual(allCommits[currentScene]);
     setTimeout(function() {
         currentScene++;
@@ -86,12 +88,29 @@ function onReplay(buttonElem){
     }
 }
 
+function initSlider(){
+    $("#slider").slider(
+        {
+            min: 0,
+            max: allCommits.length,
+            step: 1,
+            animate: true,
+            slide: onSliderChanged
+
+        });
+}
+
+function onSliderChanged(event, ui){
+    currentScene = ui.value;
+    createVisual(allCommits[currentScene]);
+}
 
 /**
  * Main function that starts program execution
  */
 function main() {
     getDataUsingD3();
+
 }
 
 // Call the main function to start program execution
