@@ -1,3 +1,4 @@
+import subprocess
 import json
 import os
 import re
@@ -29,7 +30,9 @@ def get_merge_request_shas(git_repo_dir):
     cur_dir = os.getcwd()
     os.chdir(git_repo_dir)
 
-    os.system("git checkout master")
+    #os.system("git checkout master")
+    with open(os.devnull) as devnull:
+        subprocess.call(["git", "checkout", "master"], stdout=devnull, stderr=subprocess.STDOUT)
     sha_file = os.popen("git log")
 
     merge_request_shas = []

@@ -1,3 +1,4 @@
+import subprocess
 import os
 from config import config
 
@@ -45,9 +46,9 @@ def strip_full_file_path(file_path, project_name):
     return os.sep.join(split[index:])
 
 def checkout_sha(sha):
-    os.system("git checkout .")
-    os.system("git checkout %s" % sha)
-
+    with open(os.devnull) as devnull:
+        subprocess.check_call(["git", "checkout", "."], stdout=devnull, stderr=subprocess.STDOUT)
+        subprocess.check_call(["git", "checkout", sha], stdout=devnull, stderr=subprocess.STDOUT)
 
 def get_root_dir():
     analyzer_dir = os.path.dirname(os.path.abspath(__file__))

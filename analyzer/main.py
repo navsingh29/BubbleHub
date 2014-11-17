@@ -38,7 +38,7 @@ if not is_dir_git_repo(project_dir):
 os.chdir(project_dir)
 
 shas = get_merge_request_shas(project_dir)
-print "Retrieved Pull Request %d shas" % len(shas)
+#print "Retrieved Pull Request %d shas" % len(shas)
 
 # Get the Code smell analyzer objcet
 pmd_cs = PMDCodeSmell()
@@ -63,7 +63,7 @@ for i, sha in enumerate(shas):
     code_smells_dict = code_smell_analyzer.get_code_smells(pmd_dir, project_dir)
 
     local_commit = []
-    print "Parsing %d files" % len(files)
+    #print "Parsing %d files" % len(files)
     count = 0
     for f in files:
         try:
@@ -87,7 +87,7 @@ for i, sha in enumerate(shas):
                 count += 1
         except Exception as e:
             print "ERROR in %s" % f
-    print "Parsed %d files" % count
+    #print "Parsed %d files" % count
     commits.append(local_commit)
 
 json_file = os.path.join(cur_dir, "..", "ui", json_file)
