@@ -3,7 +3,7 @@
 
     "pmd_dir" : "/Users/Ben/Projects/BubbleHub/analyzer/pmd",
 
-    "input_json" : "realm.json",
+    "input_json" : "retrofit.json",
 
     "ruleset" : "ruleset.xml"
 }

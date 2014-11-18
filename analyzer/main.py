@@ -68,7 +68,10 @@ for i, sha in enumerate(shas):
     for f in files:
         try:
             java_parser = JavaParser()
+            saved_stdout = sys.stdout
+            sys.stdout = open("trash", "w")
             java_class = java_parser.parse(f)
+            sys.stdout = saved_stdout
 
             if java_class:
                 f_dict = dict()
@@ -80,8 +83,11 @@ for i, sha in enumerate(shas):
                     cs_val = 0
 
                 f_dict["smells"] = cs_val
-
+                saved_stdout = sys.stdout
+                sys.stdout = open("trash", "w")
                 complexity = code_complexity.calculate_complexity(java_class)
+                sys.stdout = saved_stdout
+
                 f_dict["complexity"] = complexity
                 local_commit.append(f_dict)
                 count += 1

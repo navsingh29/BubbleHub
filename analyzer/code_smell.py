@@ -1,3 +1,4 @@
+import subprocess
 import os
 import re
 import util
@@ -11,12 +12,16 @@ class PMDCodeSmell(object):
         pass
 
     def call_pmd(self, pmd_dir, project_dir):
-        call = self.PMD_CLI % (pmd_dir, project_dir, util.get_ruleset_path())
-        pop = os.popen(call)
-        comb = []
-        for p in pop:
-            comb.append(p)
-        return comb
+        with open(os.devnull, "wb") as devnull:
+            proc = subprocess.Popen(["%s/bin/run.sh" % pmd_dir, "pmd", "-d", project_dir,
+                "-f", "text", "-R", util.get_ruleset_path(), "-version", "1.7",
+                "-language", "java"], stdout=subprocess.PIPE, stderr=devnull)
+            #call = self.PMD_CLI % (pmd_dir, project_dir, util.get_ruleset_path())
+            #<pop = os.popen(call)
+            comb = []
+            for p in proc.stdout.readline():
+                comb.append(p)
+            return comb
 
 class CodeSmellFile(object):
 
