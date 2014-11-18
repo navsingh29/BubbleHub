@@ -1,5 +1,6 @@
 import subprocess
 import os
+import sys
 from config import config
 
 def get_num_lines_in_file(file_path):
@@ -59,4 +60,9 @@ def get_ruleset_path():
     rs =  os.path.join(get_root_dir(), config['ruleset'])
     return rs
 
-
+def suppress_output(func, *args):
+    saved_stdout = sys.stdout
+    sys.stdout = open("trash", "w")
+    return_value =  func(args)
+    sys.stdout = saved_stdout
+    return return_value
