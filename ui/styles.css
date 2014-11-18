@@ -59,6 +59,10 @@ header, #vis-outer, #control {
 button#play {
     margin-left: 20px;
 }
+
+button#play {
+    margin-left: 20px;
+}
 #replay{
     position: absolute;
     top: 0px;
@@ -83,6 +87,7 @@ button#play {
     height: 25px;
     margin-right: 7px;
     margin-left: 7px;
+
 }
 
 #play{
