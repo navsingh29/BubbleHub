@@ -1,9 +1,7 @@
 {
-    "output_json" : "output.json",
-
-    "pmd_dir" : "/Users/Ben/Projects/BubbleHub/analyzer/pmd",
-
-    "input_json" : "realm.json",
-
-    "ruleset" : "ruleset.xml"
+    "output_json": "output.json", 
+    "pmd_dir": "/Users/Ben/Projects/BubbleHub/analyzer/pmd", 
+    "ruleset": "ruleset.xml", 
+    "repo_name": "FizzBuzzEnterpriseEdition", 
+    "input_json": "FizzBuzzEnterpriseEdition.json"
 }

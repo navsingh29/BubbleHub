@@ -14,3 +14,7 @@ with open(json_config_file) as f:
     json_contents = f.readlines()
 
 config = json.loads("".join(json_contents))
+
+def rewrite_config_json(json_dict):
+    with open(json_config_file, 'w') as f:
+        f.write(json.dumps(json_dict, indent=4))

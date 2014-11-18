@@ -10,7 +10,6 @@ import os
 import sys
 import click
 
-
 parser = argparse.ArgumentParser(description="Bubble hub.")
 parser.add_argument("--project", required=True,
                     help="Directory of java project to analyze. Project should be in git")
@@ -21,7 +20,7 @@ args = parser.parse_args()
 cur_dir = os.getcwd()
 project_dir = args.project
 pmd_dir = config.config["pmd_dir"]
-json_file = config.config["input_json"]
+repo_name = extract_repo_name(project_dir)
 
 # Check to see if valid directories
 if not os.path.isdir(project_dir):
@@ -90,6 +89,15 @@ with click.progressbar(shas,
                 pass
         commits.append(local_commit)
 
+#Rewrite the config.json file to change the input.json file name as well as the
+# repo_name value
+config.config["repo_name"] = repo_name
+config.config["input_json"] = "%s.json" % repo_name
+config.rewrite_config_json(config.config)
+json_file = config.config["input_json"]
+
+# Write the analyzed repo into a json file to be read by the ui component
 json_file = os.path.join(cur_dir, "..", "ui", json_file)
 with open(json_file, "w") as f:
     f.write(json.dumps(root_json_dict, indent=4))
+

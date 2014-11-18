@@ -66,3 +66,6 @@ def suppress_output(func, *args):
     return_value =  func(args)
     sys.stdout = saved_stdout
     return return_value
+
+def extract_repo_name(project_dir):
+    return [x for x in project_dir.split(os.sep) if x][-1]
