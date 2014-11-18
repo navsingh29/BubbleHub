@@ -17,7 +17,11 @@ html, body, h2, h3 {
 header {
     width: 80%;
     height:12%;
+    background: linear-gradient(black, #2d2d2d);
+    color: white;
+    font-family: "Arial Black","Arial Bold",Gadget,sans-serif;
 }
+
 h2, h3 {
     position: relative;
     top: 33%;
@@ -51,6 +55,10 @@ header, #vis-outer, #control {
     height: 35px;
 
 }
+
+button#play {
+    margin-left: 20px;
+}
 #replay{
     position: absolute;
     top: 0px;
@@ -68,6 +76,7 @@ header, #vis-outer, #control {
     height: 15px;
     display: inline-block;
 }
+
 #slider{
     display: inline-block;
     width: CALC(100% - 200px);
@@ -75,6 +84,7 @@ header, #vis-outer, #control {
     margin-right: 7px;
     margin-left: 7px;
 }
+
 #play{
     width: 35px;
     height: 26px;
@@ -107,15 +117,20 @@ header, #vis-outer, #control {
     width: 100%;
     height: 8%;
     z-index: 1;
-    background-color: #366097;
+    background: linear-gradient(#2d2d2d, black);
 }
 .ui-slider-handle.ui-state-default{
+    background: lightgrey;
     height: 32px;
 }
 #speed-bar .ui-slider-handle.ui-state-default{
     height: 24px;
     width: 10px;
+    background: lightgrey;
 }
 #speed-val{
     display: inline-block;
+    color: white;
+    font-size: 12px;
+    font-family: "Arial Black","Arial",Gadget,sans-serif;
 }
