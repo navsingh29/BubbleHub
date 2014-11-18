@@ -19,7 +19,7 @@ class PMDCodeSmell(object):
             #call = self.PMD_CLI % (pmd_dir, project_dir, util.get_ruleset_path())
             #<pop = os.popen(call)
             comb = []
-            for p in proc.stdout.readline():
+            for p in proc.stdout.readlines():
                 comb.append(p)
             return comb
 
