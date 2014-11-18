@@ -59,6 +59,10 @@ header, #vis-outer, #control {
 button#play {
     margin-left: 20px;
 }
+
+button#play {
+    margin-left: 20px;
+}
 #replay{
     position: absolute;
     top: 0px;
@@ -83,6 +87,8 @@ button#play {
     height: 25px;
     margin-right: 7px;
     margin-left: 7px;
+    background: linear-gradient(#4c4c4c, #444444);
+    border: black;
 }
 
 #play{
@@ -123,10 +129,15 @@ button#play {
     background: lightgrey;
     height: 32px;
 }
+#speed-bar {
+    background: linear-gradient(#4c4c4c, #444444);
+    border: black;
+}
 #speed-bar .ui-slider-handle.ui-state-default{
     height: 24px;
     width: 10px;
     background: lightgrey;
+
 }
 #speed-val{
     display: inline-block;
