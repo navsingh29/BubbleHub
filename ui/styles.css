@@ -19,8 +19,7 @@ header {
     height:12%;
     background: linear-gradient(black, #2d2d2d);
     color: white;
-    font-family: "Arial Black","Arial Bold",Gadget,sans-serif;
-}
+    font-family: "Arial Rounded MT Bold","Helvetica Rounded",Arial,sans-serif}
 
 h2, h3 {
     position: relative;
