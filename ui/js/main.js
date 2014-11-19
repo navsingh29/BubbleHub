@@ -155,7 +155,14 @@ function initSlider(){
 function onSpeedChanged(event, ui){
     var normal = 4;
     var val = ui.value;
-    var times = ui.value/normal;
+    if(val>normal){
+        if(val==5){
+            val = 6;
+        } else {
+            val = (val - 4) * 4;
+        }
+    }
+    var times = val/normal;
     speed = 1000 / times;
     $("#speed-val").text(times + "x");
 
