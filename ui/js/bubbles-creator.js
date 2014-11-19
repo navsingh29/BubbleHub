@@ -18,6 +18,15 @@ var bubble = d3.layout.pack()
 
 var svg = null;
 var oldData = [];
+/*
+// Tooltip code taken from http://bl.ocks.org/biovisualize/1016860
+var tooltip = d3.select("body")
+    .append("div")
+    .style("position", "absolute")
+    .style("z-index", "10")
+    .style("visibility", "hidden")
+    ;
+*/
 
 /**
  * Given an array of bubble objects, displays them on the SVG
@@ -27,7 +36,12 @@ function createVisual(data){
     var node = svg.selectAll(".node")
         .data(bubble.nodes({children:data, fileName:"", color:"rgba(51,153,255,0.1)"}))
         .enter().append("g")
-        .attr("class", "node")
+        .attr("class", function(d){
+                if(d.fileName=="")
+                    return "node";
+                else
+                    return "node bubble";
+            })
         .attr("transform", function(d) {
             if(d.fileName==""){
                 return "translate(" + d.x + "," + d.y + ")";
@@ -42,7 +56,19 @@ function createVisual(data){
                     }
             }
             return "translate(" + d.x + "," + d.y + ")";
-        });
+        })
+        .attr("title", function(d) {return d.className; })
+        /*
+        .on("mouseover", function(d){
+            if(d.fileName!="") {
+                tooltip.text(d.className);
+                return tooltip.style("visibility", "visible");
+            }
+        })
+        .on("mousemove", function(d){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
+        .on("mouseout", function(d){return tooltip.style("visibility", "hidden");});
+        */
+        ;
 
 
     function parseRadius(d){
@@ -114,26 +140,20 @@ function createVisual(data){
 
     oldData = data;
 
-    // Uncomment the following to dispaly class names on bubbles
-/*
-    node.append("text")
-        .attr("dy", ".3em")
-        .style("text-anchor", "middle")
-        .text(function(d) { return d.className; });
-*/
 }
 
 /**
  * Add a blank SVG to the DOM replacing the previous one if it exists
  */
 function recreateSvg(){
+    $( document ).tooltip("disable");
+    $( document ).tooltip("enable");
     if(svg!=null){
         svg.remove();
     }
     svg = d3.select("#vis").append("svg")
         .attr("width", width)
         .attr("height", height)
-        //.style("background-color", "#1C6BA0")
         .attr("class", "bubble");
 }
 

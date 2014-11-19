@@ -40,8 +40,10 @@ function beginAnimation(data) {
 }
 
 function runVisual(){
-    if(!isPlaying || currentScene + 1 == allCommits.length) {
+    if(!isPlaying || currentScene + 1 >= allCommits.length) {
         animationScheduled = false;
+        isPlaying = false;
+        setPlayBtnIcon(!isPlaying);
         return;
     }
     updateSlider();
@@ -66,34 +68,52 @@ function getDataUsingD3(){
             if(error)
                 alert("Error retrieving commit data from JSON file. Please try using a different browser.");
         d3.json(root.input_json, function(error2, root2) {
+            setRepoName(root.repo_name);
             beginAnimation(root2);
         });
         }
     );
 }
 
+function setRepoName(name){
+    $("#repo-name").text(name);
+}
 
-function onReplay(buttonElem){
-    //alert('hi');
-
-    if(!animationScheduled) { //make sure run visual isn't running twice
-        isPlaying = true;
-        currentScene = 0;
-        runVisual();
+function setPlayBtnIcon(setPlayIcon){
+    var options;
+    if(setPlayIcon){
+        if(currentScene + 1 >= allCommits.length) {
+            options = {
+                label: "replay",
+                icons: {primary: "ui-icon-seek-first"}
+            };
+        } else{
+            options = {
+                label: "play",
+                icons: {primary: "ui-icon-play"}
+            };
+        }
+    } else {
+        options = {
+            label: "pause",
+            icons: {
+                primary: "ui-icon-pause"
+            }
+        };
     }
+    $( "#play" ).button( "option", options );
 }
 
 function initSlider(){
     $("#slider").slider(
         {
             min: 0,
-            max: allCommits.length,
+            max: allCommits.length - 2,
             step: 1,
             animate: true,
             slide: onSliderChanged
 
         });
-
         $( "#play" ).button({
             text: false,
             icons: {
@@ -101,28 +121,21 @@ function initSlider(){
             }
         })
             .click(function() {
-                var options;
                 if ( $( this ).text() === "play" ) {
-                    options = {
-                        label: "pause",
-                        icons: {
-                            primary: "ui-icon-pause"
-                        }
-                    };
+                    setPlayBtnIcon(false);
                 } else {
-                    options = {
-                        label: "play",
-                        icons: {
-                            primary: "ui-icon-play"
-                        }
-                    };
+                    setPlayBtnIcon(true);
                 }
-                $( this ).button( "option", options );
-                //alert('test');
+                if(currentScene + 1 >= allCommits.length) {
+                    $("#slider").slider("option", "value", 0);
+                    currentScene = 0;
+                    setPlayBtnIcon(false);
+                }
                 isPlaying = !isPlaying;
                 if(!animationScheduled) //make sure run visual isn't running twice
                     runVisual();
             });
+
 
     $( "#speed-bar" ).slider(
         {
@@ -133,19 +146,31 @@ function initSlider(){
             animate: false,
             slide: onSpeedChanged
         });
-
 }
 
 function onSpeedChanged(event, ui){
     var normal = 4;
     var val = ui.value;
-    var times = ui.value/normal;
+    if(val>normal){
+        if(val==5){
+            val = 6;
+        } else {
+            val = (val - 4) * 4;
+        }
+    }
+    var times = val/normal;
     speed = 1000 / times;
     $("#speed-val").text(times + "x");
 
 }
 
 function onSliderChanged(event, ui){
+    if(ui.value + 1 >= allCommits.length) {
+        isPlaying = false;
+        animationScheduled = false;
+        setPlayBtnIcon(!isPlaying);
+        return;
+    }
     currentScene = ui.value;
     createVisual(allCommits[currentScene]);
 }
@@ -155,7 +180,7 @@ function onSliderChanged(event, ui){
  */
 function main() {
     getDataUsingD3();
-
+    $( document ).tooltip();
 }
 
 // Call the main function to start program execution
