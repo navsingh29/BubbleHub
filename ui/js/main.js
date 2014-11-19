@@ -180,7 +180,7 @@ function onSliderChanged(event, ui){
  */
 function main() {
     getDataUsingD3();
-    $( document ).tooltip();
+   // $( document ).tooltip();
 }
 
 // Call the main function to start program execution

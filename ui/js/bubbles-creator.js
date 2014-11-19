@@ -18,15 +18,16 @@ var bubble = d3.layout.pack()
 
 var svg = null;
 var oldData = [];
-/*
+
 // Tooltip code taken from http://bl.ocks.org/biovisualize/1016860
 var tooltip = d3.select("body")
-    .append("div")
-    .style("position", "absolute")
-    .style("z-index", "10")
-    .style("visibility", "hidden")
+        .append("div")
+        .attr("class", "tooltip")
+       .style("position", "absolute")
+       .style("z-index", "10")
+       .style("visibility", "hidden")
     ;
-*/
+
 
 /**
  * Given an array of bubble objects, displays them on the SVG
@@ -58,16 +59,28 @@ function createVisual(data){
             return "translate(" + d.x + "," + d.y + ")";
         })
         .attr("title", function(d) {return d.className; })
-        /*
+        .attr("stroke-width", function(d){
+            if($(this).is(':hover')){
+                alert("hi");
+                return "4px";
+            } else {
+                return 0;
+            }
+        })
         .on("mouseover", function(d){
             if(d.fileName!="") {
+                $(this).attr("stroke-width","4px");
+                $(this).attr("stroke", "rgba(158,202,237,0.5)");
                 tooltip.text(d.className);
                 return tooltip.style("visibility", "visible");
             }
         })
         .on("mousemove", function(d){return tooltip.style("top", (event.pageY-10)+"px").style("left",(event.pageX+10)+"px");})
-        .on("mouseout", function(d){return tooltip.style("visibility", "hidden");});
-        */
+        .on("mouseout", function(d){
+            $(this).attr("stroke-width","0px");
+            return tooltip.style("visibility", "hidden");
+        });
+
         ;
 
 
@@ -146,8 +159,9 @@ function createVisual(data){
  * Add a blank SVG to the DOM replacing the previous one if it exists
  */
 function recreateSvg(){
-    $( document ).tooltip("disable");
-    $( document ).tooltip("enable");
+    //$( document ).tooltip("disable");
+    //$( document ).tooltip("enable");
+    tooltip.style("visibility", "hidden");
     if(svg!=null){
         svg.remove();
     }
