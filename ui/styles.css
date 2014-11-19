@@ -42,26 +42,24 @@ header, #vis-outer, #control {
     width: 100%;
     background-color: rgba(28,107,160,0.5);
 }
-.bubble{
-    /* background-color: #1C6BA0; */
 
-}
-.play, #replay{
+#repo-name {
     position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 35px;
-    height: 35px;
+    bottom: 8px;
+    right: 10px;
+    color: whitesmoke;
+    font-family: "Arial Rounded MT Bold", "Helvetica Rounded", Arial, sans-serif;
+}
+.bubble:focus{
 
+    outline: none;
+    border-color: #9ecaed;
+    box-shadow: 0 0 10px #9ecaed;
+    border: 5px red solid;
+    stroke: green;
+    stroke-width: 5px;
 }
 
-button#play {
-    margin-left: 20px;
-}
-
-button#play {
-    margin-left: 20px;
-}
 #replay{
     position: absolute;
     top: 0px;
@@ -94,6 +92,7 @@ button#play {
     width: 35px;
     height: 26px;
     display: inline-block;
+    margin-left: 20px;
 }
 #control{
     height: 100%;

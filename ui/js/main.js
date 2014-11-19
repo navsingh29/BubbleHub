@@ -68,19 +68,15 @@ function getDataUsingD3(){
             if(error)
                 alert("Error retrieving commit data from JSON file. Please try using a different browser.");
         d3.json(root.input_json, function(error2, root2) {
+            setRepoName(root.repo_name);
             beginAnimation(root2);
         });
         }
     );
 }
 
-
-function onReplay(buttonElem){
-    if(!animationScheduled) { //make sure run visual isn't running twice
-        isPlaying = true;
-        currentScene = 0;
-        runVisual();
-    }
+function setRepoName(name){
+    $("#repo-name").text(name);
 }
 
 function setPlayBtnIcon(setPlayIcon){
@@ -184,7 +180,7 @@ function onSliderChanged(event, ui){
  */
 function main() {
     getDataUsingD3();
-
+    $( document ).tooltip();
 }
 
 // Call the main function to start program execution
