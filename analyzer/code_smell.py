@@ -92,9 +92,6 @@ class CodeSmellAnalyzer(object):
         if "Avoid unused local variables such as" in cs_type:
             return 5
 
-        with open("not_record_cs_types.txt", "a") as f:
-            print "Could not find %s" % cs_type
-            f.write("%s" % cs_type)
         return 0
 
     def __extract_file_name(self, pmd_result):

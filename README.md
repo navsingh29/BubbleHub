@@ -9,9 +9,10 @@ Introduction
 
 Bubble hub is a tool used to analyze Java projects under git source control for their code smells and code complexities, and visualize them over time on a per merged pull request.
 
-The project uses two Java code analysis tools, both are required:
-* PLYJ @ https://github.com/musiKk/plyj
+The project uses the Java code analysis tool PMD:
 * PMD @ http://pmd.sourceforge.net/
+
+Download PMD into any location and update the "pmd_dir" value in ui/config.json to the point to the location of the downloaded PMD.
 
 The project also requires the latest version of the Safari browser to see the visualizations.
 
@@ -19,7 +20,14 @@ To visualize the results, we use D3.js @ http://d3js.org/.
 
 Current stages of development:
 ==============
-BubbleHub is still under construction. We are currently working on combining the parsed results to be visualized by D3.js
+BubbleHub is currently done for Sprint 2. 
+
+Features implemented:
+* Bubbles have a smooth transition from frame to frame
+* Added Seek bar to view specific location in commit history
+* Added speed bar to set the speed of animations
+* Minor UI revamp
+* Finalized the code smell calculations.
 
 How to run:
 ==============
@@ -51,3 +59,12 @@ Change dir to /BubbleHub/Analyzer.
 To run tests for the visualizor
 ==============
 Open /BubbleHub/ui/tests/tests.html in the Safari or Firefox browser
+
+Sample output
+=============
+![ScreenShot](https://raw.github.com/nbrar/BubbleHub/master/sample_output.png)
+
+
+
+
+
