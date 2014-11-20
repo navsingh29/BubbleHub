@@ -59,3 +59,12 @@ Change dir to /BubbleHub/Analyzer.
 To run tests for the visualizor
 ==============
 Open /BubbleHub/ui/tests/tests.html in the Safari or Firefox browser
+
+Sample output
+=============
+![ScreenShot](https://raw.github.com/nbrar/BubbleHub/master/sample_output.png)
+
+
+
+
+
