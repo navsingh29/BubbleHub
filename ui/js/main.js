@@ -1,9 +1,9 @@
 
-var isPlaying = true;
-var allCommits;
-var currentScene = 0;
-var animationScheduled = false;
-var speed = 1000;
+var isPlaying = true; // Is the visual playing?
+var allCommits; //List of all the commits that were analyzed. (A list of lists of bubble objects).
+var currentScene = 0; // The current scene show on visualizaiton.
+var animationScheduled = false; //Whether a transition is in progress
+var speed = 1000; //  Delay between scene changes.
 
 /**
  * Callback for JSON parser, begins the animation for the provided data
@@ -16,7 +16,6 @@ function beginAnimation(data) {
     // This loop is where all the commits will be analyzed and displayed in UI
     for(var i = 0; i < numCommits; i++) {
 
-        // TODO: We may want to eventually add a real timer here to depict constant time frames
         var currCommit = data.commits[i];
         var numFiles = currCommit.length;
 
@@ -30,14 +29,18 @@ function beginAnimation(data) {
             var newFileVisualObject = createBubbleObject(currCommit[j]);
             commitFileVisuals.push(newFileVisualObject);
         }
-
         allCommits.push(commitFileVisuals);
-
     }
     initSlider();
     runVisual();
 
 }
+
+/**
+ * If isPlaying is set to true, create a visual for the next commit.
+ * Also schedule this method to run again in "speed" milliseconds.
+ * Otherwise set play button to pause icon and do nothing more.
+ */
 
 function runVisual(){
     if(!isPlaying || currentScene + 1 >= allCommits.length) {
@@ -75,9 +78,18 @@ function getDataUsingD3(){
     );
 }
 
+/**
+ * @param name The name of the repository being analyzed
+ */
 function setRepoName(name){
     $("#repo-name").text(name);
 }
+
+/**
+ * Set the play button to either play, or pause
+ * Replay will be used if current scene higher or equal to
+ * number of commits.
+ */
 
 function setPlayBtnIcon(setPlayIcon){
     var options;
@@ -104,6 +116,9 @@ function setPlayBtnIcon(setPlayIcon){
     $( "#play" ).button( "option", options );
 }
 
+/**
+ * Initialize the seek bar, speed bar, and play button
+ */
 function initSlider(){
     $("#slider").slider(
         {
@@ -148,6 +163,11 @@ function initSlider(){
         });
 }
 
+/**
+ * Callback when user changes speed bar position
+ * The speed of the visual is changed based on
+ * position of speed bar handle.
+ */
 function onSpeedChanged(event, ui){
     var normal = 4;
     var val = ui.value;
@@ -164,6 +184,11 @@ function onSpeedChanged(event, ui){
 
 }
 
+/**
+ * Callback when user changes seek bar position
+ * Recreate visual to match commit at the current
+ * position of the seek bar handle.
+ */
 function onSliderChanged(event, ui){
     if(ui.value + 1 >= allCommits.length) {
         isPlaying = false;
@@ -180,7 +205,6 @@ function onSliderChanged(event, ui){
  */
 function main() {
     getDataUsingD3();
-   // $( document ).tooltip();
 }
 
 // Call the main function to start program execution

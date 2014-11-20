@@ -67,6 +67,8 @@ function createVisual(data){
                 return 0;
             }
         })
+        // Create a tooltip when mouse hovers over a bubble
+        // Tooltip code taken from http://bl.ocks.org/biovisualize/1016860
         .on("mouseover", function(d){
             if(d.fileName!="") {
                 $(this).attr("stroke-width","4px");
@@ -84,21 +86,24 @@ function createVisual(data){
         ;
 
 
+    /**
+     *  Return the old radius of a file.
+     */
     function parseRadius(d){
         if(d.fileName==""){
             return getRadius(d);
         }
         for(var i = 0; i<oldData.length; i++){
             if(oldData[i].fileName==d.fileName) {
-                function radius(){
-                    return getRadius(oldData[i]);
-                }
-                return radius();
+                return getRadius(oldData[i]);
             }
         }
         return 0;
     }
 
+    /**
+     * Get the radius from a d3 pack object.
+     */
     function getRadius(d){
         if(d.fileName=="")
             return d.r + OUTER_BUBBLE_INC;
@@ -109,16 +114,14 @@ function createVisual(data){
     node.append("image")
         .attr("xlink:href", function(d) {
             if(d.fileName == "")
-                return "img/bubble_outer.png";
+                return "img/bubble_outer.png"; // The outer bubble has a different background image
             else
                 return "img/bubble2.png";
         })
-
         .attr("height", function(d) { return 2 * parseRadius(d); })
         .attr("width", function(d) { return 2 * parseRadius(d); })
         .attr("x", function(d) { return -1 * parseRadius(d); })
         .attr("y", function(d) { return -1 * parseRadius(d); })
-
     ;
 
     node.append("circle")
@@ -128,6 +131,9 @@ function createVisual(data){
         .style("fill", function(d) { return d.color; })
     ;
 
+    /**
+     *  If file changed location/size, animate the transition.
+     */
     svg.selectAll("circle")
         .transition()
         .duration(speed)
@@ -157,11 +163,10 @@ function createVisual(data){
 
 /**
  * Add a blank SVG to the DOM replacing the previous one if it exists
+ *  Recreate SVG for every new scene
  */
 function recreateSvg(){
-    //$( document ).tooltip("disable");
-    //$( document ).tooltip("enable");
-    tooltip.style("visibility", "hidden");
+    tooltip.style("visibility", "hidden"); // Hide tooltip when scene changes
     if(svg!=null){
         svg.remove();
     }
