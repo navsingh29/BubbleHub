@@ -5,7 +5,7 @@
 var OUTER_BUBBLE_INC = 30;
 var INNER_BUBBLES_INC = 0;
 // Diameter of the outermost circle in the visual
-var width = document.getElementById('vis').clientWidth;//960;
+var width = document.getElementById('vis').clientWidth;
 var height = document.getElementById('vis').clientHeight;
 // Function that determines ordering of bubbles
 function comparator(a, b) {return b.fileName.localeCompare(a.fileName);}
