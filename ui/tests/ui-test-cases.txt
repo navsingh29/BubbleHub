@@ -1,0 +1,64 @@
+The UI QA tests scripts
+
+=====================================================================
+Tests - Table of Contents
+=====================================================================
+Test #1 - Testing Pause/Play Button
+Test #2 - Testing Slider Bar
+Test #3 - Testing Speed Bar
+
+
+=====================================================================
+Test #1 - Testing Pause/Play Button
+=====================================================================
+
+-------------------
+Procedure
+-------------------
+- Toggle the Pause/Play button. 
+
+-------------------
+Effects
+------------------
+- The state of the button should change from Play to Pause or Pause 
+  to Play when pressed.
+- The visualization should also reflect the state (i.e., the bubbles 
+  should pause when Pause button state and should be moving/playing 
+  when Play button state)
+
+
+=====================================================================
+Test #2 - Testing Slider Bar
+=====================================================================
+
+-------------------
+Procedure
+-------------------
+- Ensure button is in Play state and visualization is playing.
+- Slide the Slider Bar forward to the end and backwards to the end 
+
+-------------------
+Effects
+-------------------
+- The visualization should fast-forward as you drag the slider bar
+  forwards, and reverse as you drab the slider bar backwards
+
+
+=====================================================================
+Test #3 - Testing Speed Bar
+=====================================================================
+
+-------------------
+Procedure
+-------------------
+- Ensure button is in Play state and visualization is playing.
+- Change the Speed Bar to to go 4x and then 0.25x
+
+-------------------
+Effects
+-------------------
+- The visualization should play 4 times the speed when Speed bar is
+  at 4x, and should play 1/4th the speed when Speed bar is at 0.25x.
+- The Slider Bar should reflect the same behaviour (i.e., move at
+  the speed specified by the Speed bar)
+
