@@ -31,13 +31,14 @@ Features implemented:
 
 How to run:
 ==============
-BubbleHub requires two libraries to be downloaded: 
+BubbleHub requiresthe   library to be downloaded: 
 * PLYJ (https://github.com/musiKk/plyj)
-* PMD @ http://pmd.sourceforge.net/
 
-You will then need to point BubbleHub to these two libraries. You can do this by updating ui/config.json and update the 'plyj_directory' and 'pmd_directory' to point to the root of path of those two libraries.
+You will then need to point BubbleHub to the PMD tool. You can do this by updating ui/config.json and update the and 'pmd_directory' to point to the root of path of those two libraries.
 
-Make sure the virtualenvironment is activated with the analyzer/requirements.txt.
+Make sure the virtualenvironment is activated in the analyzer directory with the analyzer/requirements.txt.
+
+&gt;> pip install -r requirements.txt
 
 To run the visualization and UI, one of the following two options are available:
 * Updated Safari browser on Mac
